@@ -7,4 +7,6 @@ import java.util.List;
 public interface SkiresortService {
     // skiresortテーブルを全部取得する
     List<Skiresort> findAll();
+
+    Skiresort findById(int id);
 }

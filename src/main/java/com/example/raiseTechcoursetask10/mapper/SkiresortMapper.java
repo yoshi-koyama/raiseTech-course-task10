@@ -10,4 +10,9 @@ import java.util.List;
 public interface SkiresortMapper {
     @Select("SELECT * FROM skiresort")
     List<Skiresort> findAll();
+
+    @Select("SELECT * FROM skiresort WHERE id = #{id}")
+    Skiresort findById(int id);
+
+
 }

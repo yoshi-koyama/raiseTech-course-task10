@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SkiresortServiceImpl {
+public class SkiresortServiceImpl implements SkiresortService {
 
     // field(MapperをServiceで使えるようにする)
     private final SkiresortMapper skiresortMapper;
@@ -19,5 +19,9 @@ public class SkiresortServiceImpl {
 
     public List<Skiresort> findAll() {
         return skiresortMapper.findAll();
+    }
+
+    public Skiresort findById(int id) {
+        return skiresortMapper.findById(id);
     }
 }
