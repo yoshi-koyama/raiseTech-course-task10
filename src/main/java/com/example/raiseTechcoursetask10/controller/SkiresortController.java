@@ -1,9 +1,9 @@
-package com.example.raiseTechcoursetask10.controller;
+package com.example.raisetechcoursetask10.controller;
 
-import com.example.raiseTechcoursetask10.controller.form.SkiresortCreateForm;
-import com.example.raiseTechcoursetask10.controller.response.SkiresortResponse;
-import com.example.raiseTechcoursetask10.entity.Skiresort;
-import com.example.raiseTechcoursetask10.service.SkiresortService;
+import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
+import com.example.raisetechcoursetask10.controller.response.SkiresortResponse;
+import com.example.raisetechcoursetask10.entity.Skiresort;
+import com.example.raisetechcoursetask10.service.SkiresortService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

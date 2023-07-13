@@ -1,6 +1,6 @@
-package com.example.raiseTechcoursetask10.mapper;
+package com.example.raisetechcoursetask10.mapper;
 
-import com.example.raiseTechcoursetask10.entity.Skiresort;
+import com.example.raisetechcoursetask10.entity.Skiresort;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;

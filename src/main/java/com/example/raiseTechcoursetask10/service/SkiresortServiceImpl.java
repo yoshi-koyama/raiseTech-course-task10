@@ -1,8 +1,8 @@
-package com.example.raiseTechcoursetask10.service;
+package com.example.raisetechcoursetask10.service;
 
-import com.example.raiseTechcoursetask10.controller.form.SkiresortCreateForm;
-import com.example.raiseTechcoursetask10.entity.Skiresort;
-import com.example.raiseTechcoursetask10.mapper.SkiresortMapper;
+import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
+import com.example.raisetechcoursetask10.entity.Skiresort;
+import com.example.raisetechcoursetask10.mapper.SkiresortMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class SkiresortServiceImpl implements SkiresortService {
     @Override
     public Skiresort createSkiresort(SkiresortCreateForm skiresortCreateForm) {
         Skiresort skiresort = new Skiresort(
-                skiresortCreateForm.getId(),
+                0, //idの仮初期値として設定
                 skiresortCreateForm.getName(),
                 skiresortCreateForm.getArea(),
                 skiresortCreateForm.getCustomerEvaluation()

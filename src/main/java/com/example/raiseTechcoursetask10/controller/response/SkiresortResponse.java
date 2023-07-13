@@ -1,11 +1,11 @@
-package com.example.raiseTechcoursetask10.controller.response;
+package com.example.raisetechcoursetask10.controller.response;
 
-import com.example.raiseTechcoursetask10.entity.Skiresort;
+import com.example.raisetechcoursetask10.entity.Skiresort;
 
 public class SkiresortResponse {
     // レスポンスに返したいフィールドだけを定義する
-    private String name;
-    private String area;
+    private final String name;
+    private final String area;
 
     public SkiresortResponse(Skiresort skiresort) {
         this.name = skiresort.getName();

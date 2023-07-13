@@ -1,4 +1,4 @@
-package com.example.raiseTechcoursetask10.entity;
+package com.example.raisetechcoursetask10.entity;
 
 public class Skiresort {
     private int id;
@@ -16,6 +16,7 @@ public class Skiresort {
     public int getId() {
         return this.id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -23,6 +24,7 @@ public class Skiresort {
     public String getName() {
         return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -30,6 +32,7 @@ public class Skiresort {
     public String getArea() {
         return area;
     }
+
     public void setArea(String area) {
         this.area = area;
     }

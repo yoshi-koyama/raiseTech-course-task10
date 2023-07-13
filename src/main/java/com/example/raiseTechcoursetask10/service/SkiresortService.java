@@ -1,12 +1,12 @@
-package com.example.raiseTechcoursetask10.service;
+package com.example.raisetechcoursetask10.service;
 
-import com.example.raiseTechcoursetask10.controller.form.SkiresortCreateForm;
-import com.example.raiseTechcoursetask10.entity.Skiresort;
+import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
+import com.example.raisetechcoursetask10.entity.Skiresort;
 
 import java.util.List;
 
 public interface SkiresortService {
-    // skiresortテーブルを全部取得する
+
     List<Skiresort> findAll();
 
     Skiresort findById(int id);
