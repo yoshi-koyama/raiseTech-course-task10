@@ -1,6 +1,7 @@
 package com.example.raisetechcoursetask10.controller;
 
 import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
+import com.example.raisetechcoursetask10.controller.form.SkiresortUpdateForm;
 import com.example.raisetechcoursetask10.controller.response.SkiresortResponse;
 import com.example.raisetechcoursetask10.entity.Skiresort;
 import com.example.raisetechcoursetask10.exception.ResourceNotFoundException;
@@ -54,12 +55,13 @@ public class SkiresortController {
     }
 
     @PostMapping("/skiresorts")
-    public ResponseEntity<SkiresortResponse> createSkiresort(@RequestBody SkiresortCreateForm skiresortCreateForm) {
+    public ResponseEntity<SkiresortResponse> createSkiresort(@RequestBody SkiresortCreateForm skiresortCreateForm, HttpServletRequest request) {
         Skiresort skiresort = skiresortService.createSkiresort(skiresortCreateForm);
 
-        // skiresortを作成する処理
+        // skiresortオブジェクトを元にレスポンス用のオブジェクトを生成
         SkiresortResponse skiresortResponse = new SkiresortResponse(skiresort);
-        URI url = UriComponentsBuilder.fromUriString("http://localhost8080")
+        // HttpServletRequestのインスタンスでリクエストの中身を取得し、動的なURLを生成
+        URI url = UriComponentsBuilder.fromUriString(request.getRequestURI())
                 .path("/skiresorts/{id}")
                 .buildAndExpand(skiresort.getId())
                 .toUri();
@@ -68,6 +70,10 @@ public class SkiresortController {
 
     @PatchMapping("/skiresorts/{id}")
     public ResponseEntity<Map<String, String>> update(@PathVariable("id") int id, @RequestBody @Validated SkiresortCreateForm form) {
-        return ResponseEntity.ok(Map.of("message", "successfully update!"));
+
+        SkiresortUpdateForm skiresortUpdateForm = new SkiresortUpdateForm(id, form.getName(), form.getArea(), form.getCustomerEvaluation());
+        // SkiresortUpdateFormの情報を使用してレコードを更新し、更新されたSkiresortエンティティを返す
+        Skiresort updatedSkiresort = skiresortService.updateSkiresort(new SkiresortUpdateForm(id, form.getName(), form.getArea(), form.getCustomerEvaluation()));
+        return ResponseEntity.ok(Map.of("message", "successfully update"));
     }
 }

@@ -56,6 +56,6 @@ public class SkiresortServiceImpl implements SkiresortService {
             skiresort.setCustomerEvaluation(skiresortUpdateForm.getCustomerEvaluation());
             this.skiresortMapper.updateSkiresort(skiresort);
             return skiresort;
-        }).orElseThrow(() -> new ResourceNotFoundException("resouce not found!"));
+        }).orElseThrow(() -> new ResourceNotFoundException("resource not found!"));
     }
 }
