@@ -8,6 +8,7 @@ import com.example.raisetechcoursetask10.service.SkiresortService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -52,7 +53,6 @@ public class SkiresortController {
         return new ResponseEntity(body, HttpStatus.NOT_FOUND);
     }
 
-
     @PostMapping("/skiresorts")
     public ResponseEntity<SkiresortResponse> createSkiresort(@RequestBody SkiresortCreateForm skiresortCreateForm) {
         Skiresort skiresort = skiresortService.createSkiresort(skiresortCreateForm);
@@ -64,5 +64,10 @@ public class SkiresortController {
                 .buildAndExpand(skiresort.getId())
                 .toUri();
         return ResponseEntity.created(url).body(skiresortResponse);
+    }
+
+    @PatchMapping("/skiresorts/{id}")
+    public ResponseEntity<Map<String, String>> update(@PathVariable("id") int id, @RequestBody @Validated SkiresortCreateForm form) {
+        return ResponseEntity.ok(Map.of("message", "successfully update!"));
     }
 }
