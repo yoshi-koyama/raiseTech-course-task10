@@ -69,11 +69,11 @@ public class SkiresortController {
     }
 
     @PatchMapping("/skiresorts/{id}")
-    public ResponseEntity<Map<String, String>> update(@PathVariable("id") int id, @RequestBody @Validated SkiresortCreateForm form) {
+    public ResponseEntity<Map<String, String>> update(@PathVariable("id") int id, @RequestBody @Validated SkiresortUpdateForm form) {
 
         SkiresortUpdateForm skiresortUpdateForm = new SkiresortUpdateForm(id, form.getName(), form.getArea(), form.getCustomerEvaluation());
-        // SkiresortUpdateFormの情報を使用してレコードを更新し、更新されたSkiresortエンティティを返す
-        Skiresort updatedSkiresort = skiresortService.updateSkiresort(new SkiresortUpdateForm(id, form.getName(), form.getArea(), form.getCustomerEvaluation()));
+        // SkiresortUpdateFormの情報を使用してレコードを更新する（戻り値不要）
+        skiresortService.updateSkiresort(new SkiresortUpdateForm(id, form.getName(), form.getArea(), form.getCustomerEvaluation()));
         return ResponseEntity.ok(Map.of("message", "successfully update"));
     }
 }

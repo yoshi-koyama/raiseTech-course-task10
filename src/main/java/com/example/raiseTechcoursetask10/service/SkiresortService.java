@@ -14,5 +14,5 @@ public interface SkiresortService {
 
     Skiresort createSkiresort(SkiresortCreateForm skiresortCreateForm);
 
-    Skiresort updateSkiresort(SkiresortUpdateForm skiresortUpdateForm);
+    void updateSkiresort(SkiresortUpdateForm skiresortUpdateForm);
 }

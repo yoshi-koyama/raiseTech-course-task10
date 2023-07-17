@@ -47,15 +47,18 @@ public class SkiresortServiceImpl implements SkiresortService {
     }
 
     @Override
-    public Skiresort updateSkiresort(SkiresortUpdateForm skiresortUpdateForm) {
+    public void updateSkiresort(SkiresortUpdateForm skiresortUpdateForm) {
         Optional<Skiresort> existingSkiresort = this.skiresortMapper.findById(skiresortUpdateForm.getId());
 
-        return existingSkiresort.map(skiresort -> {
-            skiresort.setName(skiresortUpdateForm.getName());
-            skiresort.setArea(skiresortUpdateForm.getArea());
-            skiresort.setCustomerEvaluation(skiresortUpdateForm.getCustomerEvaluation());
-            this.skiresortMapper.updateSkiresort(skiresort);
-            return skiresort;
-        }).orElseThrow(() -> new ResourceNotFoundException("resource not found!"));
+        // existingSkiresordのフィールドをskiresortUpdateFormの値で上書きする
+        existingSkiresort.map(skiresort -> {
+                    skiresort.setName(skiresortUpdateForm.getName());
+                    skiresort.setArea(skiresortUpdateForm.getArea());
+                    skiresort.setCustomerEvaluation(skiresortUpdateForm.getCustomerEvaluation());
+                    return skiresort;
+                }
+        ).ifPresentOrElse(this.skiresortMapper::updateSkiresort, () -> {
+            throw new ResourceNotFoundException("resource not found!");
+        });
     }
 }
