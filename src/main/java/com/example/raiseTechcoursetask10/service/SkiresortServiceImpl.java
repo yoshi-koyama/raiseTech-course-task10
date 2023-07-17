@@ -14,7 +14,6 @@ public class SkiresortServiceImpl implements SkiresortService {
 
     // field(MapperをServiceで使えるようにする)
     private final SkiresortMapper skiresortMapper;
-    private int id;
 
     // constructor(MapperをServiceで使えるようにする)
     public SkiresortServiceImpl(SkiresortMapper skiresortMapper) {
