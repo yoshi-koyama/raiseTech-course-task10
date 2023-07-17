@@ -1,7 +1,6 @@
 package com.example.raisetechcoursetask10.service;
 
 import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
-import com.example.raisetechcoursetask10.controller.form.SkiresortUpdateForm;
 import com.example.raisetechcoursetask10.entity.Skiresort;
 import com.example.raisetechcoursetask10.exception.ResourceNotFoundException;
 import com.example.raisetechcoursetask10.mapper.SkiresortMapper;
@@ -15,6 +14,7 @@ public class SkiresortServiceImpl implements SkiresortService {
 
     // field(MapperをServiceで使えるようにする)
     private final SkiresortMapper skiresortMapper;
+    private int id;
 
     // constructor(MapperをServiceで使えるようにする)
     public SkiresortServiceImpl(SkiresortMapper skiresortMapper) {
@@ -46,19 +46,14 @@ public class SkiresortServiceImpl implements SkiresortService {
         return skiresort;
     }
 
-    @Override
-    public void updateSkiresort(SkiresortUpdateForm skiresortUpdateForm) {
-        Optional<Skiresort> existingSkiresort = this.skiresortMapper.findById(skiresortUpdateForm.getId());
 
-        // existingSkiresordのフィールドをskiresortUpdateFormの値で上書きする
-        existingSkiresort.map(skiresort -> {
-                    skiresort.setName(skiresortUpdateForm.getName());
-                    skiresort.setArea(skiresortUpdateForm.getArea());
-                    skiresort.setCustomerEvaluation(skiresortUpdateForm.getCustomerEvaluation());
-                    return skiresort;
-                }
-        ).ifPresentOrElse(this.skiresortMapper::updateSkiresort, () -> {
-            throw new ResourceNotFoundException("resource not found!");
-        });
+    @Override
+    public void updateSkiresort(int id, String name, String area, String customerEvaluation) {
+        Skiresort skiresort = this.skiresortMapper.findById(id).orElseThrow(() -> new ResourceNotFoundException("resource not found"));
+        skiresort.setName(name);
+        skiresort.setArea(area);
+        skiresort.setCustomerEvaluation(customerEvaluation);
+
+        this.skiresortMapper.updateSkiresort(skiresort);
     }
 }

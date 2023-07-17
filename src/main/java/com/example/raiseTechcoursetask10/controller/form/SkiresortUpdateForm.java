@@ -1,33 +1,19 @@
 package com.example.raisetechcoursetask10.controller.form;
 
 public class SkiresortUpdateForm {
-    private int id;
-    private String name;
+    private final String name;
     private String area;
     private String customerEvaluation;
 
-    public SkiresortUpdateForm(int id, String name, String area, String customerEvaluation) {
-        this.id = id;
+    public SkiresortUpdateForm(String name, String area, String customerEvaluation) {
         this.name = name;
         this.area = area;
         this.customerEvaluation = customerEvaluation;
     }
 
-    // SkiresortUpdateFormクラスのいんすたんすからidを取得するため、引数なし
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    // SkiresortUpdateFormクラスのインスタンスからidを取得するため、引数なし
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getArea() {
