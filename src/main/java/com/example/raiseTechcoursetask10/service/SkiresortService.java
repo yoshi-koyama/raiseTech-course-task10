@@ -12,4 +12,6 @@ public interface SkiresortService {
     Skiresort findById(int id);
 
     Skiresort createSkiresort(SkiresortCreateForm skiresortCreateForm);
+
+    void updateSkiresort(int id, String name, String area, String customerEvaluation);
 }

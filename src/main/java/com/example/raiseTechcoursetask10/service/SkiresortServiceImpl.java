@@ -40,9 +40,19 @@ public class SkiresortServiceImpl implements SkiresortService {
                 skiresortCreateForm.getCustomerEvaluation()
         );
 
-
         skiresortMapper.insertSkiresort(skiresort);
 
         return skiresort;
+    }
+
+
+    @Override
+    public void updateSkiresort(int id, String name, String area, String customerEvaluation) {
+        Skiresort skiresort = this.skiresortMapper.findById(id).orElseThrow(() -> new ResourceNotFoundException("resource not found"));
+        skiresort.setName(name);
+        skiresort.setArea(area);
+        skiresort.setCustomerEvaluation(customerEvaluation);
+
+        this.skiresortMapper.updateSkiresort(skiresort);
     }
 }

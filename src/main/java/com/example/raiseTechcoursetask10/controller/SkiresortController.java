@@ -1,6 +1,7 @@
 package com.example.raisetechcoursetask10.controller;
 
 import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
+import com.example.raisetechcoursetask10.controller.form.SkiresortUpdateForm;
 import com.example.raisetechcoursetask10.controller.response.SkiresortResponse;
 import com.example.raisetechcoursetask10.entity.Skiresort;
 import com.example.raisetechcoursetask10.exception.ResourceNotFoundException;
@@ -8,6 +9,7 @@ import com.example.raisetechcoursetask10.service.SkiresortService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -52,17 +54,25 @@ public class SkiresortController {
         return new ResponseEntity(body, HttpStatus.NOT_FOUND);
     }
 
-
     @PostMapping("/skiresorts")
-    public ResponseEntity<SkiresortResponse> createSkiresort(@RequestBody SkiresortCreateForm skiresortCreateForm) {
+    public ResponseEntity<SkiresortResponse> createSkiresort(@RequestBody SkiresortCreateForm skiresortCreateForm, HttpServletRequest request) {
         Skiresort skiresort = skiresortService.createSkiresort(skiresortCreateForm);
 
-        // skiresortを作成する処理
+        // skiresortオブジェクトを元にレスポンス用のオブジェクトを生成
         SkiresortResponse skiresortResponse = new SkiresortResponse(skiresort);
-        URI url = UriComponentsBuilder.fromUriString("http://localhost8080")
+        // HttpServletRequestのインスタンスでリクエストの中身を取得し、動的なURLを生成
+        URI url = UriComponentsBuilder.fromUriString(request.getRequestURI())
                 .path("/skiresorts/{id}")
                 .buildAndExpand(skiresort.getId())
                 .toUri();
         return ResponseEntity.created(url).body(skiresortResponse);
+    }
+
+    @PatchMapping("/skiresorts/{id}")
+    public ResponseEntity<Map<String, String>> update(@PathVariable("id") int id, @RequestBody @Validated SkiresortUpdateForm form) {
+
+        // id以外のSkiresortUpdateFormの情報を使用してレコードを更新する
+        skiresortService.updateSkiresort(id, form.getName(), form.getArea(), form.getCustomerEvaluation());
+        return ResponseEntity.ok(Map.of("message", "successfully update"));
     }
 }

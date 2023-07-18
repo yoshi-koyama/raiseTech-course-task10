@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,10 @@ public interface SkiresortMapper {
     Optional<Skiresort> findById(int id);
 
     @Insert("INSERT INTO skiresort (id, name, area, customerEvaluation) VALUES (#{id}, #{name}, #{area}, #{customerEvaluation})")
+    // idを自動生成する
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertSkiresort(Skiresort skiresort);
+
+    @Update("UPDATE skiresort SET name = #{name}, area = #{area}, customerEvaluation = #{customerEvaluation} WHERE id = #{id}")
+    void updateSkiresort(Skiresort skiresort);
 }
