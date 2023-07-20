@@ -1,8 +1,15 @@
 package com.example.raisetechcoursetask10.controller.form;
 
+import org.jetbrains.annotations.NotNull;
+
 public class SkiresortCreateForm {
+    @NotNull
     private String name;
+
+    @NotNull
     private String area;
+
+    @NotNull
     private String customerEvaluation;
 
     public SkiresortCreateForm(String name, String area, String customerEvaluation) {
@@ -10,7 +17,7 @@ public class SkiresortCreateForm {
         this.area = area;
         this.customerEvaluation = customerEvaluation;
     }
-    
+
     public String getName() {
         return name;
     }
