@@ -22,7 +22,6 @@
 - @Validated
     - ServiceやControllerクラスのメソッド内の引数）。Spring特有のバリデーションを実行するために使用
     - Java Bean Validationの場合に使用する
-    - HTTPステータスコード404（Not Found）を返す
 
 # 特定の例外
 
