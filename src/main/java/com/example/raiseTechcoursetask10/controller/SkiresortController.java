@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -80,5 +81,11 @@ public class SkiresortController {
         // id以外のSkiresortUpdateFormの情報を使用してレコードを更新する
         skiresortService.updateSkiresort(id, form.getName(), form.getArea(), form.getCustomerEvaluation());
         return ResponseEntity.ok(Map.of("message", "successfully update"));
+    }
+
+    @DeleteMapping("/skiresorts/{id}")
+    public ResponseEntity<Map<String, String>> deleteSkiresort(@PathVariable("id") int id) {
+        skiresortService.deleteSkiresort(id);
+        return ResponseEntity.ok(Map.of("message", "successfully deleted"));
     }
 }
