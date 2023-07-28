@@ -31,12 +31,13 @@ class SkiresortMapperTest {
     void 全てのスキーリゾートが取得できること() {
         List<Skiresort> skiresorts = skiresortMapper.findAll();
         assertThat(skiresorts)
-                .hasSize(4)
+                .hasSize(5)
                 .contains(
                         new Skiresort(1, "rusutsu", "hokkaido", "雪質が良くて、カービング練習に最適。"),
                         new Skiresort(2, "zao", "yamagata", "凄く広くて、樹氷が綺麗だった。"),
-                        new Skiresort(3, "marunuma-kogen", "gunma", "初心者から上級者まで楽しめる。ゲレ食のアクセスが悪い。"),
-                        new Skiresort(4, "hakubaGoryu", "nagano", "GWまで滑れる。外国人が多くていつも混んでる。")
+                        new Skiresort(3, "marunuma-kogen", "gunma", "初心者から上級者まで楽しめる。ゲレ食のアクセスが悪い"),
+                        new Skiresort(4, "hakubaGoryu", "nagano", "GWまで滑れる。外国人が多くていつも混んでる。"),
+                        new Skiresort(5, "nozawa-onsen", "nagano", "ゴンドラが10人乗りでガラス張りに変わった。外国人ばかりで激混み")
                 );
     }
 }
