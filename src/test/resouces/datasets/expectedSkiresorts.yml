@@ -1,0 +1,17 @@
+Skiresorts:
+  - id: 1
+    name: "rusutsu";
+    area: "hokkaido"
+    customerEvaluation: "雪質が良くて、カービング練習に最適。"
+  - id: 2
+    name: "zao";
+    area: "yamagata"
+    customerEvaluation: "凄く広くて、樹氷が綺麗だった。"
+  - id: 3
+    name: "marunuma-kogen";
+    area: "gunma"
+    customerEvaluation: "初心者から上級者まで楽しめる。ゲレ食のアクセスが悪い。"
+  - id: 4
+    name: "hakubaGoryu";
+    area: "nagano"
+    customerEvaluation: "GWまで滑れる。外国人が多くていつも混んでる。"
