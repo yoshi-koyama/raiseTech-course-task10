@@ -1,4 +1,4 @@
-Skiresorts:
+skiresort:
   - id: 1
     name: "rusutsu"
     area: "hokkaido"
@@ -19,3 +19,15 @@ Skiresorts:
     name: "nozawa-onsen"
     area: "nagano"
     customerEvaluation: "ゴンドラが10人乗りでガラス張りに変わった。外国人ばかりで激混み"
+  - id: 6
+    name: "安比高原"
+    area: "岩手県"
+    customerEvaluation: "いつも天気が悪い。"
+  - id: 7
+    name: "月山"
+    area: "山形県"
+    customerEvaluation: "5月から雪がなくなるまで営業してて、全面コブになる。"
+  - id: 8
+    name: "イエティ"
+    area: "静岡県"
+    customerEvaluation: "10月オープンで日本一早い。激混み"
