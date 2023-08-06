@@ -4,6 +4,6 @@ properties:
  schema: skiresort_db
 caseInsensitiveStrategy: LOWERCASE
 connectionConfig:
- url: "jdbc:mysql://localhost:3307/skiresort_db
+ url: "jdbc:mysql://localhost:3307/skiresort_db"
  user: "user"
  password: "password"
