@@ -35,4 +35,19 @@ class SkiresortMapperTest {
                         new Skiresort(3, "イエティ", "静岡県", "10月オープンで日本一早い。激混み。")
                 );
     }
+
+    @Test
+    @DataSet(value = "datasets/skiresort.yml")
+    @Transactional
+    void 指定したidのスキーリゾートが取得できること() {
+        assertThat(skiresortMapper.findById(1))
+                .contains(new Skiresort(1, "安比高原", "岩手県", "いつも天気が悪い。"));
+    }
+
+    @Test
+    @DataSet(value = "datasets/empty-skiresort.yml")
+    @Transactional
+    void レコードが存在しない場合に空のListが取得できること() {
+        assertThat(skiresortMapper.findAll().isEmpty());
+    }
 }
