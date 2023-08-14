@@ -3,6 +3,7 @@ package com.example.raiseTechcoursetask10.mapper;
 import com.example.raisetechcoursetask10.entity.Skiresort;
 import com.example.raisetechcoursetask10.mapper.SkiresortMapper;
 import com.github.database.rider.core.api.dataset.DataSet;
+import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -49,5 +50,28 @@ class SkiresortMapperTest {
     @Transactional
     void レコードが存在しない場合に空のListが取得できること() {
         assertThat(skiresortMapper.findAll().isEmpty());
+    }
+
+    @Test
+    @ExpectedDataSet(value = "datasets/update-skiresort.yml")
+    @Transactional
+    void 指定したidのスキーリゾートが更新できること() {
+        skiresortMapper.update(1, "田沢湖", "秋田県", "大会バーンの垂直に見える急斜面が面白かった。");
+    }
+
+    @Test
+    @DataSet(value = "datasets/create-skiresort.yml")
+    @Transactional
+    void スキーリゾートの登録ができること() {
+        assertThat(skiresortMapper.findById(1))
+                .contains(new Skiresort(1, "安比高原", "岩手県", "いつも天気が悪い。"));
+    }
+
+    @Test
+    @ExpectedDataSet(value = "datasets/delete-skiresort.yml")
+    @Transactional
+    void 指定したidのスキーリゾートが削除できること() {
+        assertThat(skiresortMapper.findById(3))
+                .contains(new Skiresort(1, "安比高原", "岩手県", "いつも天気が悪い。"));
     }
 }

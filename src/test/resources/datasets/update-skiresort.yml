@@ -1,0 +1,13 @@
+skiresort:
+  - id: 1
+    name: "上越国際"
+    area: "新潟県"
+    customerEvaluation: "毎年SAJのスノーボード全日本選手権大会が行われる。すごく広いスキー場"
+  - id: 2
+    name: ""
+    area: "山形県"
+    customerEvaluation: "5月から雪がなくなるまで営業していて、全面コブになる。"
+  - id: 3
+    name: "イエティ"
+    area: "静岡県"
+    customerEvaluation: "10月オープンで日本一早い。激混み。"
