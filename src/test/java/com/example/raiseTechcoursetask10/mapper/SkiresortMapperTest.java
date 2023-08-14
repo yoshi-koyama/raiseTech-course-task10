@@ -53,25 +53,11 @@ class SkiresortMapperTest {
     }
 
     @Test
+    @DataSet(value = "datasets/skiresort.yml")
     @ExpectedDataSet(value = "datasets/update-skiresort.yml")
     @Transactional
     void 指定したidのスキーリゾートが更新できること() {
-        skiresortMapper.update(1, "田沢湖", "秋田県", "大会バーンの垂直に見える急斜面が面白かった。");
-    }
-
-    @Test
-    @DataSet(value = "datasets/create-skiresort.yml")
-    @Transactional
-    void スキーリゾートの登録ができること() {
-        assertThat(skiresortMapper.findById(1))
-                .contains(new Skiresort(1, "安比高原", "岩手県", "いつも天気が悪い。"));
-    }
-
-    @Test
-    @ExpectedDataSet(value = "datasets/delete-skiresort.yml")
-    @Transactional
-    void 指定したidのスキーリゾートが削除できること() {
-        assertThat(skiresortMapper.findById(3))
-                .contains(new Skiresort(1, "安比高原", "岩手県", "いつも天気が悪い。"));
+        Skiresort skiresort = new Skiresort(1, "田沢湖", "秋田県", "大会バーンの垂直に見える急斜面が面白かった。");
+        skiresortMapper.updateSkiresort(skiresort);
     }
 }

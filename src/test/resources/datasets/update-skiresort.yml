@@ -1,10 +1,10 @@
 skiresort:
   - id: 1
-    name: "上越国際"
-    area: "新潟県"
-    customerEvaluation: "毎年SAJのスノーボード全日本選手権大会が行われる。すごく広いスキー場"
+    name: "田沢湖"
+    area: "秋田県"
+    customerEvaluation: "大会バーンの垂直に見える急斜面が面白かった。"
   - id: 2
-    name: ""
+    name: "月山"
     area: "山形県"
     customerEvaluation: "5月から雪がなくなるまで営業していて、全面コブになる。"
   - id: 3
