@@ -53,11 +53,11 @@ class SkiresortMapperTest {
     }
 
     @Test
-    @DataSet(value = "datasets/skiresort.yml")
+    @DataSet(value = "datasets/before-update-skiresort.yml")
     @ExpectedDataSet(value = "datasets/update-skiresort.yml")
     @Transactional
     void 指定したidのスキーリゾートが更新できること() {
-        Skiresort skiresort = new Skiresort(1, "田沢湖", "秋田県", "大会バーンの垂直に見える急斜面が面白かった。");
+        Skiresort skiresort = new Skiresort(1, "天元台", "山形県", "圧雪していないようで、ほぼ不正地");
         skiresortMapper.updateSkiresort(skiresort);
     }
 }
