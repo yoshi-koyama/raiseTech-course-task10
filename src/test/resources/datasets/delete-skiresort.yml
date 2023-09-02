@@ -1,0 +1,9 @@
+skiresort:
+  - id: 1
+    name: "安比高原"
+    area: "岩手県"
+    customerEvaluation: "いつも天気が悪い。"
+  - id: 2
+    name: "月山"
+    area: "山形県"
+    customerEvaluation: "5月から雪がなくなるまで営業していて、全面コブになる。"
