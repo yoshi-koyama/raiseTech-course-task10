@@ -1,1 +1,13 @@
 # raiseTech-course-task10
+
+```- skiresortMapper.update　
+インスタンスメソッドの呼び出し
+SkiresortMapperクラスのインスタンスが持つupdateメソッドを呼び出していることを意味している。
+（SkiresortMapperクラスにupdateメソッドがあるため使用可）
+
+- SkiresortMapper.update
+クラスメソッドの呼び出し
+SkiresortMapperクラスのクラスが持つupdateメソッドを呼び出していることを意味している。
+インスタンス化せずに呼び出すことができる。
+ただしstaticメソッドはたとえばテストに利用するassertThatやApache CommonsのStringUtils.isBlankなどのUtilメソッドを実装したいときに使う。
+staticメソッドはスレッドセーフなどを意識しないといけず、安易に作らないほうがよい。```

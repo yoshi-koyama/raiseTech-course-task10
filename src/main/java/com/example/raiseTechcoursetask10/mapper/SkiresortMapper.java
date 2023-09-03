@@ -29,4 +29,5 @@ public interface SkiresortMapper {
 
     @Delete("DELETE skiresort FROM skiresort WHERE id = #{id}")
     void deleteSkiresort(int id);
+
 }

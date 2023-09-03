@@ -1,5 +1,8 @@
 package com.example.raisetechcoursetask10.entity;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class Skiresort {
     private int id;
     private String name;

@@ -1,0 +1,10 @@
+skiresort:
+  - id: 1
+    name: "天元台"
+    area: "山形県"
+    customerEvaluation: "圧雪していないようで、ほぼ不正地"
+
+  - id: 2
+    name: "神立"
+    area: "新潟県"
+    customerEvaluation: "パークが常設されている。フリースタイラーが多い"

@@ -1,0 +1,10 @@
+skiresort:
+  - id: 1
+    name: "キロロ"
+    area: "北海道"
+    customerEvaluation: "初心者でもロングランが楽しめる。パウダー天国"
+
+  - id: 2
+    name: "神立"
+    area: "新潟県"
+    customerEvaluation: "パークが常設されている。フリースタイラーが多い"
