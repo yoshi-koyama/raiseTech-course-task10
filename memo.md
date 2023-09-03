@@ -39,7 +39,7 @@ id=2, area="新潟"
 
 <details><summary>考え方</summary><div>
 
-- テストコードに書くメソッドはMapper.jsに書いてあること必須！！
+- テストコードに書くメソッドはMapper.javaに書いてあること必須！！
 - 全てのスキーリゾートが取得できること
     - 比較データ（ymlファイル）は1つで良い
     - `hasSize()`内にデータのサイズを書く
@@ -71,7 +71,17 @@ id=2, area="新潟"
 
 <details><summary>テスト結果表示方法</summary><div>
 
+- テスト結果を確認したい
 
-テスト結果を確認したい
+```
+./gradlew test --tests "com.example.raiseTechcoursetask10.RaiseTechCourseTask10ApplicationTests" --info
+```
 
-`./gradlew test --tests "com.example.raiseTechcoursetask10.RaiseTechCourseTask10ApplicationTests" --info`
+- コマンド実行結果から探す
+
+```agsl
+Generating HTML test report...
+Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTech-course/raiseTech-course-task10/build/reports/tests/test
+```
+
+- htmlファイルが作成されているので、ディレクトリで`index.html`を探す

@@ -30,9 +30,4 @@ public interface SkiresortMapper {
     @Delete("DELETE skiresort FROM skiresort WHERE id = #{id}")
     void deleteSkiresort(int id);
 
-    @Update("UPDATE skiresort SET name = #{name}, area = #{area}, customerEvaluation = #{customerEvaluation} WHERE id = #{id}")
-    void afterUpdateSkiresort(int id);
-
-    @Delete("DELETE skiresort FROM skiresort WHERE id = #{id}")
-    void afterDeleteSkiresort(int id);
 }
