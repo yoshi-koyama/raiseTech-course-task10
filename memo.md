@@ -72,7 +72,7 @@ id=2, area="新潟"
 
 ## テスト結果表示方法
 
-- テスト結果を確認したい
+- テスト結果レポートを作成したい
 
 ```
 ./gradlew test --tests "com.example.raiseTechcoursetask10.RaiseTechCourseTask10ApplicationTests" --info
@@ -121,12 +121,20 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 ### 実装
 
-- `doReturn`：Mapperの動作をスタブ化しているので、テスト期待値と等しくなる
-- `Skiresort actual`:doReturn -whenで定義した値が入る
-- `assertThat(actual)`:Serviceが返した実際の値を検証している
+- `doReturn`：Mapperの動作をスタブ化している仮のデータを定義している
+- `Skiresort actual`:実際の値が入る
+- `assertThat`:テスト対象の実行結果やオブジェクトの状態を期待する値や条件と比較する
+- `assertThat(actual)`:`assertThat`の引数`(actual)`に実際の値を定義する。Serviceが返した実際の値をassertThat(検証/比較)している
+- `assertThat(actual).isEqualTo(期待値となる値)`:期待値は`.isEqualTo`の引数に定義する
 - アサーションのimport文に気を付ける
 
-折りたたみ
+
+- 存在するidを指定した時、正常にデータが返されること
+    - `doReturn -when`:スタブ化したid1のデータを定義する
+    - `assertThat(actual).isEqualTo()`：.isEqualToの引数に、期待値データを定義する
+    - `verify`：1回だけid1が呼び出されたかを確認する
+
+【折りたたみ】
 
 ```
 <details><summary>Hello</summary><blockquote>
