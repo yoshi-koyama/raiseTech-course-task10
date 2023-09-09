@@ -1,11 +1,12 @@
-<details><summary>DBテスト</summary><div>
+# 単体テスト
 
-<details><summary>@DBRiderの場合</summary><div>
+# DBテスト
 
+## @DBRiderの場合
 
-@DataSet：更新前のテーブル[引数にvalue:パスを書く]
+- @DataSet：更新前のテーブル[引数にvalue:パスを書く]
 
-@ExpectedDataSet：期待値データ[引数にvalue:パスを書く]
+- @ExpectedDataSet：期待値データ[引数にvalue:パスを書く]
 
 updateSkiresortはSkiresortクラスを引数に取るわけですから、呼び出し方を変えないといけないですね。
 
@@ -37,7 +38,7 @@ id=1, area="山形"
 id=2, area="新潟"
 ```
 
-<details><summary>考え方</summary><div>
+## 考え方
 
 - テストコードに書くメソッドはMapper.javaに書いてあること必須！！
 - 全てのスキーリゾートが取得できること
@@ -69,7 +70,7 @@ id=2, area="新潟"
     - 比較する必要があるため、初期値と期待値のymlファイルが必要（同じデータが良い）
     - Mapperのメソッド名の引数に存在しないidを書く
 
-<details><summary>テスト結果表示方法</summary><div>
+## テスト結果表示方法
 
 - テスト結果を確認したい
 
@@ -85,3 +86,44 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 ```
 
 - htmlファイルが作成されているので、ディレクトリで`index.html`を探す
+
+# Serviceテスト
+
+- モック：偽物。本物のフリをする
+- スタブ：代理。代わりのものを使う
+
+## 考え方
+
+- ServiceがMapperに依存している状態なので、そのまま書くとエラー
+
+  -> 単体テストなので、Mapperに依存できない
+- 依存しているクラスをモック化する
+
+- スタブ化（モック化）したMapperの状態を確認する
+- DBは無関係
+- doReturn：期待値を定義
+
+### 準備
+
+- `@ExtendWith(MockitoExtension.class)`
+
+-> Mockitoを使用できるようにclassに付ける
+
+- classに`@ExtendWith(MockitoExtension.class)` // JUnit5でMockitoを使うため
+- `@Mock` // モック化（スタブ化）する対象に定義
+- `@InjectMocks` // テスト対象に定義 @Mockでモックにしたインスタンスの注入先となるインスタンスに定義（インターフェースに付けるとエラー）
+
+### 実装
+
+- `doReturn`：期待値を定義
+- `Skiresort actual`:doReturn -whenで定義した期待値が入る
+
+折りたたみ
+
+```
+<details><summary>Hello</summary><blockquote>
+  <details><summary>World</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
+```
