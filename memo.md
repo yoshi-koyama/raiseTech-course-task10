@@ -1,11 +1,12 @@
-<details><summary>DBテスト</summary><div>
+# 単体テスト
 
-<details><summary>@DBRiderの場合</summary><div>
+# DBテスト
 
+## @DBRiderの場合
 
-@DataSet：更新前のテーブル[引数にvalue:パスを書く]
+- @DataSet：更新前のテーブル[引数にvalue:パスを書く]
 
-@ExpectedDataSet：期待値データ[引数にvalue:パスを書く]
+- @ExpectedDataSet：期待値データ[引数にvalue:パスを書く]
 
 updateSkiresortはSkiresortクラスを引数に取るわけですから、呼び出し方を変えないといけないですね。
 
@@ -37,7 +38,7 @@ id=1, area="山形"
 id=2, area="新潟"
 ```
 
-<details><summary>考え方</summary><div>
+## 考え方
 
 - テストコードに書くメソッドはMapper.javaに書いてあること必須！！
 - 全てのスキーリゾートが取得できること
@@ -69,9 +70,9 @@ id=2, area="新潟"
     - 比較する必要があるため、初期値と期待値のymlファイルが必要（同じデータが良い）
     - Mapperのメソッド名の引数に存在しないidを書く
 
-<details><summary>テスト結果表示方法</summary><div>
+## テスト結果表示方法
 
-- テスト結果を確認したい
+- テスト結果レポートを作成したい
 
 ```
 ./gradlew test --tests "com.example.raiseTechcoursetask10.RaiseTechCourseTask10ApplicationTests" --info
@@ -85,3 +86,60 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 ```
 
 - htmlファイルが作成されているので、ディレクトリで`index.html`を探す
+
+# Serviceテスト
+
+- モック：偽物。本物のフリをする
+- スタブ：代理。代わりのものを使う
+
+## 考え方
+
+- ServiceがMapperに依存している状態なので、そのまま書くとエラー
+
+  -> 単体テストなので、Mapperに依存できない
+- 依存しているクラスをモック化する
+
+- スタブ化（モック化）したMapperの状態を確認する
+- DBは無関係
+- doReturn：値を返すメソッドをスタブ化（モック化）したときに返す値を定義するためのメソッド
+
+モックオブジェクトが特定のメソッド呼び出しに対して、特定の値を返すように指定するために使用される
+
+モックオブジェクトがgetSomeValue()メソッドが呼ばれたときに42を返すように設定する例
+
+```doReturn(42).when(someMock).getSomeValue();```
+
+### 準備
+
+- `@ExtendWith(MockitoExtension.class)`
+
+-> Mockitoを使用できるようにclassに付ける
+
+- classに`@ExtendWith(MockitoExtension.class)` // JUnit5でMockitoを使うため
+- `@Mock` // モック化（スタブ化）する対象に定義
+- `@InjectMocks` // テスト対象に定義 @Mockでモックにしたインスタンスの注入先となるインスタンスに定義（インターフェースに付けるとエラー）
+
+### 実装
+
+- `doReturn`：Mapperの動作をスタブ化している仮のデータを定義している
+- `Skiresort actual`:実際の値が入る
+- `assertThat`:テスト対象の実行結果やオブジェクトの状態を期待する値や条件と比較する
+- `assertThat(actual)`:`assertThat`の引数`(actual)`に実際の値を定義する。Serviceが返した実際の値をassertThat(検証/比較)している
+- `assertThat(actual).isEqualTo(期待値となる値)`:期待値は`.isEqualTo`の引数に定義する
+- アサーションのimport文に気を付ける
+
+
+- 存在するidを指定した時、正常にデータが返されること
+    - `doReturn -when`:スタブ化したid1のデータを定義する
+    - `assertThat(actual).isEqualTo()`：.isEqualToの引数に、期待値データを定義する
+    - `verify`：1回だけid1が呼び出されたかを確認する
+
+【折りたたみ】
+
+```
+<details><summary>Hello</summary><blockquote>
+  <details><summary>World</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
+```
