@@ -26,7 +26,7 @@ class SkiresortServiceImplTest {
     SkiresortMapper skiresortMapper;
 
     @Test
-    public void 存在するユーザのIDを指定したときに正常にデータが返されること() throws Exception {
+    public void 存在するスキー場のIDを指定したときに正常にデータが返されること() throws Exception {
         // doReturn -when :Mokietoの記述
         doReturn(Optional.of(new Skiresort(1, "たかつえ", "福島県", "いつも空いてて1枚バーンが気持ちいい"))).when(skiresortMapper).findById(1);
 

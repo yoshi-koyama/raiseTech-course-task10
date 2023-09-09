@@ -101,7 +101,13 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 - スタブ化（モック化）したMapperの状態を確認する
 - DBは無関係
-- doReturn：期待値を定義
+- doReturn：値を返すメソッドをスタブ化（モック化）したときに返す値を定義するためのメソッド
+
+モックオブジェクトが特定のメソッド呼び出しに対して、特定の値を返すように指定するために使用される
+
+モックオブジェクトがgetSomeValue()メソッドが呼ばれたときに42を返すように設定する例
+
+```doReturn(42).when(someMock).getSomeValue();```
 
 ### 準備
 
@@ -115,8 +121,10 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 ### 実装
 
-- `doReturn`：期待値を定義
-- `Skiresort actual`:doReturn -whenで定義した期待値が入る
+- `doReturn`：Mapperの動作をスタブ化しているので、テスト期待値と等しくなる
+- `Skiresort actual`:doReturn -whenで定義した値が入る
+- `assertThat(actual)`:Serviceが返した実際の値を検証している
+- アサーションのimport文に気を付ける
 
 折りたたみ
 
