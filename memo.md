@@ -128,11 +128,20 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 - `assertThat(actual).isEqualTo(期待値となる値)`:期待値は`.isEqualTo`の引数に定義する
 - アサーションのimport文に気を付ける
 
+### doReturnの書き方
+
+- ` when(モックインスタンス.メソッド(引数)).thenReturn(戻り値)`;
+
+- ` doReturn(戻り値).when(モックインスタンス).メソッド(引数);`
 
 - 存在するidを指定した時、正常にデータが返されること
     - `doReturn -when`:スタブ化したid1のデータを定義する
     - `assertThat(actual).isEqualTo()`：.isEqualToの引数に、期待値データを定義する
     - `verify`：1回だけid1が呼び出されたかを確認する
+
+- 全てのデータを取得する
+    - リスト化する
+    - `actual`:テストしたい実際の値をリスト型のactualに代入する
 
 【折りたたみ】
 
