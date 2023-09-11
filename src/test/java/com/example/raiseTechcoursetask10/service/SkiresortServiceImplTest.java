@@ -55,4 +55,5 @@ class SkiresortServiceImplTest {
         assertThat(actual).isEqualTo(skiresorts);
         verify(skiresortMapper, times(1)).findAll();
     }
+
 }

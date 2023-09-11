@@ -141,6 +141,7 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 - 全てのデータを取得する
     - リスト化する
+    - ` doReturn(戻り値).when(モック化するMapperインスタンス).テストしたいメソッド();`
     - `actual`:テストしたい実際の値をリスト型のactualに代入する
 
 【折りたたみ】
