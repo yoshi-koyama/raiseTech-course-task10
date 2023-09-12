@@ -1,6 +1,7 @@
 package com.example.raiseTechcoursetask10.service;
 
 import com.example.raisetechcoursetask10.entity.Skiresort;
+import com.example.raisetechcoursetask10.exception.ResourceNotFoundException;
 import com.example.raisetechcoursetask10.mapper.SkiresortMapper;
 import com.example.raisetechcoursetask10.service.SkiresortServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -39,7 +41,6 @@ class SkiresortServiceImplTest {
 
     @Test
     public void 全てのスキー場情報を取得できること() {
-
         List<Skiresort> skiresorts = List.of(
                 new Skiresort(1, "Cadrona", "NZ", "パイプのnationals公式大会で優勝して、副賞モルディブ1週間旅行だった！ゲレンデはコンクリートみたいに硬い"),
                 new Skiresort(2, "Whistler", "canada", "滞在2週間の半分以上雨で、記録的な少雪な年だった"),
@@ -54,5 +55,17 @@ class SkiresortServiceImplTest {
         // actual(実際)の値がモック化した値(skiresorts)と等しいか検証する
         assertThat(actual).isEqualTo(skiresorts);
         verify(skiresortMapper, times(1)).findAll();
+    }
+
+    @Test
+    public void 存在しないIDを指定した時エラーメッセージが返されること() throws Exception {
+        // モック化　id100を指定したとき空かどうか
+        doReturn(Optional.empty()).when(skiresortMapper).findById(100);
+
+        // test実行　memberServiceImpl.findByIdメソッドにid100を渡した時、例外をスローすることを期待している
+        assertThatThrownBy(() -> skiresortServiceImpl.findById(100)) // テスト対象メソッド
+                // throwされる例外がResourceNotFoundException（リソースがないことを通知する）を返す
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("resource not found");
     }
 }
