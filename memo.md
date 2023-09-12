@@ -102,6 +102,7 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 - スタブ化（モック化）したMapperの状態を確認する
 - DBは無関係
 - doReturn：値を返すメソッドをスタブ化（モック化）したときに返す値を定義するためのメソッド
+- 検査例外と非検査例外：`throws Exception`をメソッドにつけないとコンパイルエラーになるのは、検査例外を`throw`するかもしれないメソッドを呼び出すときのみ
 
 モックオブジェクトが特定のメソッド呼び出しに対して、特定の値を返すように指定するために使用される
 
@@ -121,6 +122,7 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 ### 実装
 
+- `throws Exception`:テスト対象が検査例外をthrowするかどうかで必要不要を判断する。Mapperの返す値によって例外を起こしそうな場合は必要
 - `doReturn`：Mapperの動作をスタブ化している仮のデータを定義している
 - `Skiresort actual`:実際の値が入る
 - `assertThat`:テスト対象の実行結果やオブジェクトの状態を期待する値や条件と比較する
@@ -142,6 +144,12 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 - 全てのデータを取得する
     - リスト化する
     - `actual`:テストしたい実際の値をリスト型のactualに代入する
+
+- 存在しないIDを指定した時エラーメッセージが返されること
+    - `throws Exception`:必要？不要？存在しないIDを指定した時にMapperは一体どんな値を返すのかを考える
+    - `assertThatThrownBy()`: 例外の検証ができる
+    - `isinstanceof()`:対象のメソッドを実行した時にthrowされる例外が、何インスタンスか？を検証している
+    - `ResourceNotFoundException`:指定したIDに該当するリソースがないことを通知する例外
 
 【折りたたみ】
 
