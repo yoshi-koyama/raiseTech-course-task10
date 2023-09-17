@@ -95,9 +95,11 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 # Serviceテスト
 
-### `Skiresort:`スキーリゾートの情報を保持するためのクラス
+### `Skiresort`:スキーリゾートの情報を保持するためのクラス
 
-### `SkiresortServiceImpl:`スキーリゾート情報を操作するためのサービスクラス
+### `SkiresortServiceImpl`:スキーリゾート情報を操作するためのサービスクラス
+
+### `SkiresortService`:Skiresort(Entity)を操作するインターフェース
 
 - モック：偽物。本物のフリをする
 - スタブ：代理。代わりのものを使う
