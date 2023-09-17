@@ -29,7 +29,7 @@ class SkiresortServiceImplTest {
     SkiresortMapper skiresortMapper;
 
     @Test
-    public void 存在するスキー場のIDを指定したときに正常にデータが返されること() throws Exception {
+    public void 存在するスキー場のIDを指定したときに正常にデータが返されること() {
         // doReturn -when :Mokietoの記述
         doReturn(Optional.of(new Skiresort(1, "たかつえ", "福島県", "いつも空いてて1枚バーンが気持ちいい"))).when(skiresortMapper).findById(1);
 
@@ -43,7 +43,7 @@ class SkiresortServiceImplTest {
     public void 全てのスキー場情報を取得できること() {
         List<Skiresort> skiresorts = List.of(
                 new Skiresort(1, "Cadrona", "NZ", "パイプのnationals公式大会で優勝して、副賞モルディブ1週間旅行だった！ゲレンデはコンクリートみたいに硬い"),
-                new Skiresort(2, "Whistler", "canada", "滞在2週間の半分以上雨で、記録的な少雪な年だった"),
+                new Skiresort(2, "Whistler", "Canada", "滞在2週間の半分以上雨で、記録的な少雪な年だった"),
                 new Skiresort(3, "Mt.Hood", "Oregon", "標高が高すぎて高山病になった。ガスってる日に2000m以上続く急斜面で滑落した"));
 
         // 依存しているSkiresortMapperをモック化する
@@ -58,7 +58,7 @@ class SkiresortServiceImplTest {
     }
 
     @Test
-    public void 存在しないIDを指定した時エラーメッセージが返されること() throws Exception {
+    public void 存在しないIDを指定した時エラーメッセージが返されること() {
         // モック化　id100を指定したとき空かどうか
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
 
@@ -67,5 +67,24 @@ class SkiresortServiceImplTest {
                 // throwされる例外がResourceNotFoundException（リソースがないことを通知する）を返す
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("resource not found");
+        verify(skiresortMapper, times(1)).findById(100);
+    }
+
+    @Test
+    public void 指定したidのスキー場情報を更新できること() {
+        // モック化　returnするSkiresortは更新前のデータを設定
+        doReturn(Optional.of(new Skiresort(1, "Whistler", "Canada", "11kmのロングランが楽しめる。次回は天気の良いハイシーズンに行きたい"))).when(skiresortMapper).findById(1);
+        // updateSkiresortメソッドを呼び出して、id1が持つ情報をLake Louiseに更新する
+        skiresortServiceImpl.updateSkiresort(1, "Lake Louise", "Canada", "バンフから近くて無料シャトルバスがある。広大で美しいゲレンデ");
+
+        // skiresortMapperオブジェクトのID1が1回呼ばれたことの検証
+        verify(skiresortMapper, times(1)).findById(1);
+
+        // Skiresortのインスタンス定義
+        // これが更新後のデータの期待値 Lake Louise->Skiresortのインスタンス化updateSkiresortを定義しないとエラー
+        Skiresort updateSkiresort = new Skiresort(1, "Lake Louise", "Canada", "バンフから近くて無料シャトルバスがある。広大で美しいゲレンデ");
+        // skiresortMapperオブジェクトのupdateSkiresortByIdメソッドが1回呼ばれたことの検証
+        // skiresortMapperのupdateSkiresortメソッドの引数updateSkiresort変数が渡されて、更新後データであるLake Louiseであることを検証する
+        verify(skiresortMapper, times(1)).updateSkiresort(updateSkiresort);
     }
 }

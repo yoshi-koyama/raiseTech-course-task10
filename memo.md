@@ -41,6 +41,12 @@ id=2, area="新潟"
 ## 考え方
 
 - テストコードに書くメソッドはMapper.javaに書いてあること必須！！
+- 検査例外と非検査例外
+    - 検査例外：プログラマが予想して対応できるエラー。Exceptionクラス配下のRuntime Exception以外のクラスが対象。
+    - 例外（exception）のうち、メソッドの呼び出し側に`try-catch`文による例外処理の記述が要請されるもの
+    - 非検査例外：プログラマが予測できないエラー
+- RuntimeException:実行時の例外を拾うことができる
+
 - 全てのスキーリゾートが取得できること
     - 比較データ（ymlファイル）は1つで良い
     - `hasSize()`内にデータのサイズを書く
@@ -88,6 +94,10 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 - htmlファイルが作成されているので、ディレクトリで`index.html`を探す
 
 # Serviceテスト
+
+### `Skiresort:`スキーリゾートの情報を保持するためのクラス
+
+### `SkiresortServiceImpl:`スキーリゾート情報を操作するためのサービスクラス
 
 - モック：偽物。本物のフリをする
 - スタブ：代理。代わりのものを使う
@@ -150,6 +160,18 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
     - `assertThatThrownBy()`: 例外の検証ができる
     - `isinstanceof()`:対象のメソッドを実行した時にthrowされる例外が、何インスタンスか？を検証している
     - `ResourceNotFoundException`:指定したIDに該当するリソースがないことを通知する例外
+
+- 指定したIDの情報を更新できること
+
+1. `skiresortMapper`の`findById`メソッドを使って更新前のデータを取得する ->`doReturn -when`:whenに更新前データを定義する
+2. `skiresortServiceImpl`オブジェクトの`updateSkiresort`メソッドを呼び出す。このメソッドは、指定したIDのスキーリゾート情報を更新する->`Lake Louise`
+3. `verify`:skiresortMapperオブジェクトのID1が1回呼ばれたことの検証。
+4. 新しい`Skiresort`インスタンスを作成し、変数`updateSkiresort`に更新後データ`Lake Louise`を設定する。->
+   Skiresortのインスタンス化updateSkiresortを定義しないとエラー
+5.
+    - `verify`:skiresortMapperオブジェクトのupdateSkiresortメソッドが1回呼ばれたことの検証
+    - verifyの検証時に`updateSkiresort`を渡す-> `MockitoはskiresortMapper.updateSkiresort`に更新後の`Lake Louise`
+      の情報が渡されたのだよねという検証までしてくれる
 
 【折りたたみ】
 
