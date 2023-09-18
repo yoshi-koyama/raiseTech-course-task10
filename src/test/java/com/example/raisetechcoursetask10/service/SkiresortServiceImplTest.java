@@ -91,7 +91,7 @@ class SkiresortServiceImplTest {
     @Test
     // updateSkiresortメソッドに対するテスト
     public void 指定したIDが存在しない時にエラーメッセージが返されること() {
-        // id100を指定したとき空かどうか -> モック化されたメソッドが存在しないため空のOptionalを返す
+
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
 
         assertThatThrownBy(() -> skiresortServiceImpl.updateSkiresort(100, "Coronet Peak", "NZ", "海外遠征で初めて滑ったスキー場。すごく広くてクイーンズタウンからも近い")) // テスト対象メソッド)
