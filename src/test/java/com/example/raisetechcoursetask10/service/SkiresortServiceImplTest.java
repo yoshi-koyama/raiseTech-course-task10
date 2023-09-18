@@ -1,9 +1,8 @@
-package com.example.raiseTechcoursetask10.service;
+package com.example.raisetechcoursetask10.service;
 
 import com.example.raisetechcoursetask10.entity.Skiresort;
 import com.example.raisetechcoursetask10.exception.ResourceNotFoundException;
 import com.example.raisetechcoursetask10.mapper.SkiresortMapper;
-import com.example.raisetechcoursetask10.service.SkiresortServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -58,6 +57,7 @@ class SkiresortServiceImplTest {
     }
 
     @Test
+    // skiresortMapperメソッドに対するテスト
     public void 存在しないIDを指定した時エラーメッセージが返されること() {
         // モック化　id100を指定したとき空かどうか
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
@@ -86,5 +86,17 @@ class SkiresortServiceImplTest {
         // skiresortMapperオブジェクトのupdateSkiresortByIdメソッドが1回呼ばれたことの検証
         // skiresortMapperのupdateSkiresortメソッドの引数updateSkiresort変数が渡されて、更新後データであるLake Louiseであることを検証する
         verify(skiresortMapper, times(1)).updateSkiresort(updateSkiresort);
+    }
+
+    @Test
+    // updateSkiresortメソッドに対するテスト
+    public void 指定したIDが存在しない時にエラーメッセージが返されること() {
+        // id100を指定したとき空かどうか -> モック化されたメソッドが存在しないため空のOptionalを返す
+        doReturn(Optional.empty()).when(skiresortMapper).findById(100);
+
+        assertThatThrownBy(() -> skiresortServiceImpl.updateSkiresort(100, "Coronet Peak", "NZ", "海外遠征で初めて滑ったスキー場。すごく広くてクイーンズタウンからも近い")) // テスト対象メソッド)
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("resource not found");
+        verify(skiresortMapper, times(1)).findById(100);
     }
 }
