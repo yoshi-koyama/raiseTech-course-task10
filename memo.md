@@ -81,7 +81,7 @@ id=2, area="新潟"
 - テスト結果レポートを作成したい
 
 ```
-./gradlew test --tests "com.example.raiseTechcoursetask10.RaiseTechCourseTask10ApplicationTests" --info
+./gradlew test --tests "com.example.raisetechcoursetask10.RaiseTechCourseTask10ApplicationTests" --info
 ```
 
 - コマンド実行結果から探す
@@ -95,9 +95,11 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 # Serviceテスト
 
-### `Skiresort:`スキーリゾートの情報を保持するためのクラス
+### `Skiresort`:スキーリゾートの情報を保持するためのクラス
 
-### `SkiresortServiceImpl:`スキーリゾート情報を操作するためのサービスクラス
+### `SkiresortServiceImpl`:スキーリゾート情報を操作するためのサービスクラス
+
+### `SkiresortService`:Skiresort(Entity)を操作するインターフェース
 
 - モック：偽物。本物のフリをする
 - スタブ：代理。代わりのものを使う
@@ -155,7 +157,7 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
     - リスト化する
     - `actual`:テストしたい実際の値をリスト型のactualに代入する
 
-- 存在しないIDを指定した時エラーメッセージが返されること
+- skiresortMapperに存在しないIDを指定した時エラーメッセージが返されること
     - `throws Exception`:必要？不要？存在しないIDを指定した時にMapperは一体どんな値を返すのかを考える
     - `assertThatThrownBy()`: 例外の検証ができる
     - `isinstanceof()`:対象のメソッドを実行した時にthrowされる例外が、何インスタンスか？を検証している
@@ -172,6 +174,9 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
     - `verify`:skiresortMapperオブジェクトのupdateSkiresortメソッドが1回呼ばれたことの検証
     - verifyの検証時に`updateSkiresort`を渡す-> `MockitoはskiresortMapper.updateSkiresort`に更新後の`Lake Louise`
       の情報が渡されたのだよねという検証までしてくれる
+
+- updateSkiresortに存在しないIdを指定したらエラーメッセージが返されること
+- `assertThatThrownBy`:例外の検証ができる
 
 【折りたたみ】
 
