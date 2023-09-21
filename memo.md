@@ -132,7 +132,7 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 - `@Mock` // モック化（スタブ化）する対象に定義
 - `@InjectMocks` // テスト対象に定義 @Mockでモックにしたインスタンスの注入先となるインスタンスに定義（インターフェースに付けるとエラー）
 
-### 実装
+### 実装概要
 
 - `throws Exception`:テスト対象が検査例外をthrowするかどうかで必要不要を判断する。Mapperの返す値によって例外を起こしそうな場合は必要
 - `doReturn`：Mapperの動作をスタブ化している仮のデータを定義している
@@ -141,6 +141,12 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 - `assertThat(actual)`:`assertThat`の引数`(actual)`に実際の値を定義する。Serviceが返した実際の値をassertThat(検証/比較)している
 - `assertThat(actual).isEqualTo(期待値となる値)`:期待値は`.isEqualTo`の引数に定義する
 - アサーションのimport文に気を付ける
+
+### エラー
+
+- `staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできません`:インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー
+  -> staticメソッド = クラスメソッド
+  
 
 ### doReturnの書き方
 
@@ -158,25 +164,31 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
     - `actual`:テストしたい実際の値をリスト型のactualに代入する
 
 - skiresortMapperに存在しないIDを指定した時エラーメッセージが返されること
-    - `throws Exception`:必要？不要？存在しないIDを指定した時にMapperは一体どんな値を返すのかを考える
-    - `assertThatThrownBy()`: 例外の検証ができる
-    - `isinstanceof()`:対象のメソッドを実行した時にthrowされる例外が、何インスタンスか？を検証している
-    - `ResourceNotFoundException`:指定したIDに該当するリソースがないことを通知する例外
+  - `throws Exception`:テストケース内で呼び出すメソッドが検査例外をthrowしうる場合必要
+  - `assertThatThrownBy()`: 例外の検証ができる
+  - `isInstanceof()`:対象のメソッドを実行した時にthrowされる例外が、何インスタンスか？を検証している
+  - `ResourceNotFoundException`:指定したIDに該当するリソースがないことを通知する例外
 
 - 指定したIDの情報を更新できること
 
 1. `skiresortMapper`の`findById`メソッドを使って更新前のデータを取得する ->`doReturn -when`:whenに更新前データを定義する
 2. `skiresortServiceImpl`オブジェクトの`updateSkiresort`メソッドを呼び出す。このメソッドは、指定したIDのスキーリゾート情報を更新する->`Lake Louise`
 3. `verify`:skiresortMapperオブジェクトのID1が1回呼ばれたことの検証。
-4. 新しい`Skiresort`インスタンスを作成し、変数`updateSkiresort`に更新後データ`Lake Louise`を設定する。->
-   Skiresortのインスタンス化updateSkiresortを定義しないとエラー
-5.
-    - `verify`:skiresortMapperオブジェクトのupdateSkiresortメソッドが1回呼ばれたことの検証
-    - verifyの検証時に`updateSkiresort`を渡す-> `MockitoはskiresortMapper.updateSkiresort`に更新後の`Lake Louise`
-      の情報が渡されたのだよねという検証までしてくれる
+4. 新しい`Skiresort`インスタンスを作成し、変数`updateSkiresort`に更新後データ`Lake Louise`を設定する。-> Skiresortのインスタンス化updateSkiresortを定義しないとエラーになる
+5. `updateSkiresort`: 戻り値がvoidなのでassertThatできない -> 代替としてverifyを使って検証する
+   - `verify`:skiresortMapperオブジェクトのupdateSkiresortメソッドが1回呼ばれたことの検証
+   - verifyの検証時に`updateSkiresort`を渡す-> `MockitoはskiresortMapper.updateSkiresort`に更新後の`Lake Louise`
+     の情報が渡されたのだよねという検証までしてくれる
 
 - updateSkiresortに存在しないIdを指定したらエラーメッセージが返されること
-- `assertThatThrownBy`:例外の検証ができる
+  - `assertThatThrownBy`:例外の検証ができる。`ResourceNotFoundException`をthrowされることを期待している
+  - `isInstanceOf`:throwされた例外が`ResourceNotFoundException`のインスタンスであることを検証する
+  
+- 指定したIDのスキー場情報を削除する
+  - `doReturn`:対象のIDのスキー場情報をモック化して`when`でskiresortMapperで対象IDを検索する
+  - `void`：deleteSkiresortはvoidのため、assertThatは使えない
+  - staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできませんエラーが表示->インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー->staticメソッド = クラスメソッド
+
 
 【折りたたみ】
 
