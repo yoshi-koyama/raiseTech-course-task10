@@ -109,7 +109,7 @@ class SkiresortServiceImplTest {
         // deleteSkiresortメソッドを呼び出す。引数は削除するIDのスキー場情報が渡される
         skiresortServiceImpl.deleteSkiresort(1);
 
-        // deleteSkiresortはvoidなのでassertThat使用不可->findByIdで検証する
+        // deleteSkiresortはvoidなのでassertThat使用不可->verifyで検証する
         verify(skiresortMapper,times(1)).findById(1);
         verify(skiresortMapper, times(1)).deleteSkiresort(1);
     }

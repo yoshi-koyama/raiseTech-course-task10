@@ -144,7 +144,7 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 ### エラー
 
-- `staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできません`:staticメソッドの呼び出し方だとエラー
+- `staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできません`:インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー
   -> staticメソッド = クラスメソッド
   
 
@@ -164,9 +164,9 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
     - `actual`:テストしたい実際の値をリスト型のactualに代入する
 
 - skiresortMapperに存在しないIDを指定した時エラーメッセージが返されること
-  - `throws Exception`:必要？不要？存在しないIDを指定した時にMapperは一体どんな値を返すのかを考える
+  - `throws Exception`:テストケース内で呼び出すメソッドが検査例外をthrowしうる場合必要
   - `assertThatThrownBy()`: 例外の検証ができる
-  - `isinstanceof()`:対象のメソッドを実行した時にthrowされる例外が、何インスタンスか？を検証している
+  - `isInstanceof()`:対象のメソッドを実行した時にthrowされる例外が、何インスタンスか？を検証している
   - `ResourceNotFoundException`:指定したIDに該当するリソースがないことを通知する例外
 
 - 指定したIDの情報を更新できること
@@ -175,7 +175,7 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 2. `skiresortServiceImpl`オブジェクトの`updateSkiresort`メソッドを呼び出す。このメソッドは、指定したIDのスキーリゾート情報を更新する->`Lake Louise`
 3. `verify`:skiresortMapperオブジェクトのID1が1回呼ばれたことの検証。
 4. 新しい`Skiresort`インスタンスを作成し、変数`updateSkiresort`に更新後データ`Lake Louise`を設定する。-> Skiresortのインスタンス化updateSkiresortを定義しないとエラーになる
-5. `updateSkiresort`: 戻り値がvoidなのでassertThatできない -> 代替としてverifyでfindByIdを使って検証する
+5. `updateSkiresort`: 戻り値がvoidなのでassertThatできない -> 代替としてverifyを使って検証する
    - `verify`:skiresortMapperオブジェクトのupdateSkiresortメソッドが1回呼ばれたことの検証
    - verifyの検証時に`updateSkiresort`を渡す-> `MockitoはskiresortMapper.updateSkiresort`に更新後の`Lake Louise`
      の情報が渡されたのだよねという検証までしてくれる
@@ -186,13 +186,8 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
   
 - 指定したIDのスキー場情報を削除する
   - `doReturn`:対象のIDのスキー場情報をモック化して`when`でskiresortMapperで対象IDを検索する
-  - `void`：deleteSkiresortはvoidのため、assertThatは使えない -> findByIdで呼び出す
-  - staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできませんエラーが表示->staticメソッドの呼び出し方だとエラー->staticメソッド = クラスメソッド
-
-
-
-
-
+  - `void`：deleteSkiresortはvoidのため、assertThatは使えない
+  - staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできませんエラーが表示->インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー->staticメソッド = クラスメソッド
 
 
 【折りたたみ】
