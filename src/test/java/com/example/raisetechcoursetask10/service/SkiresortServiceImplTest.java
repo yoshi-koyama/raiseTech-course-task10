@@ -77,7 +77,7 @@ class SkiresortServiceImplTest {
         // updateSkiresortメソッドを呼び出して、id1が持つ情報をLake Louiseに更新する
         skiresortServiceImpl.updateSkiresort(1, "Lake Louise", "Canada", "バンフから近くて無料シャトルバスがある。広大で美しいゲレンデ");
 
-        // skiresortMapperオブジェクトのID1が1回呼ばれたことの検証
+        // skiresortMapperオブジェクトのID1が1回呼ばれたことの検証（updteSkiresortは戻り値がvoidなのでassertThatでの検証ができない）
         verify(skiresortMapper, times(1)).findById(1);
 
         // Skiresortのインスタンス定義
@@ -91,12 +91,26 @@ class SkiresortServiceImplTest {
     @Test
     // updateSkiresortメソッドに対するテスト
     public void 指定したIDが存在しない時にエラーメッセージが返されること() {
-
+        // skiresortMapperのfindByIdメソッドが100を指定したときモック化されたメソッドが存在しないため空のOptionalを返す->IDが100のスキーリゾートが存在しない状態
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
 
+        // updateSkiresortメソッドを実行した時にthrowされる例外がResourceNotFoundExceptionクラスのインスタンスであることを期待している
         assertThatThrownBy(() -> skiresortServiceImpl.updateSkiresort(100, "Coronet Peak", "NZ", "海外遠征で初めて滑ったスキー場。すごく広くてクイーンズタウンからも近い")) // テスト対象メソッド)
                 .isInstanceOf(ResourceNotFoundException.class)
                 .hasMessage("resource not found");
         verify(skiresortMapper, times(1)).findById(100);
+    }
+
+    @Test
+    public void 指定したIDのスキー場情報を削除できること() {
+        doReturn(Optional.of(new Skiresort(1, "白馬乗鞍", "長野県", "初めてペンションに居候として山籠りし、初めて草大会に出場した思い出のゲレンデ"))).when(skiresortMapper).findById(1);
+
+        // staticメソッド（クラスメソッド）の呼び出し方はNG
+        // deleteSkiresortメソッドを呼び出す。引数は削除するIDのスキー場情報が渡される
+        skiresortServiceImpl.deleteSkiresort(1);
+
+        // deleteSkiresortはvoidなのでassertThat使用不可->findByIdで検証する
+        verify(skiresortMapper,times(1)).findById(1);
+        verify(skiresortMapper, times(1)).deleteSkiresort(1);
     }
 }
