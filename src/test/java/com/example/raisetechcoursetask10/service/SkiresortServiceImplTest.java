@@ -77,7 +77,7 @@ class SkiresortServiceImplTest {
         // updateSkiresortメソッドを呼び出して、id1が持つ情報をLake Louiseに更新する
         skiresortServiceImpl.updateSkiresort(1, "Lake Louise", "Canada", "バンフから近くて無料シャトルバスがある。広大で美しいゲレンデ");
 
-        // skiresortMapperオブジェクトのID1が1回呼ばれたことの検証（updteSkiresortは戻り値がvoidなのでassertThatでの検証ができない）
+        // skiresortMapperオブジェクトのID1が1回呼ばれたことの検証（updateSkiresortは戻り値がvoidなのでassertThatでの検証ができない）
         verify(skiresortMapper, times(1)).findById(1);
 
         // Skiresortのインスタンス定義
