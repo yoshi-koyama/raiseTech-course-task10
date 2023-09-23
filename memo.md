@@ -101,8 +101,9 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 ### `SkiresortService`:Skiresort(Entity)を操作するインターフェース
 
-- モック：偽物。本物のフリをする
-- スタブ：代理。代わりのものを使う
+- モック：偽物。本物のフリをする。依存しているオブジェクトのメソッドの呼び出し回数の検証など、依存オブジェクトが正しく利用されているかの検証をするのが主な目的。
+- スタブ：代理。代わりのものを使う。依存するオブジェクトの代用となるオブジェクトのこと。
+　　　　  任意の戻り値を設定して、予測可能な動作をするようにして使う。
 
 ## 考え方
 
@@ -154,6 +155,17 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
 
 - ` doReturn(戻り値).when(モックインスタンス).メソッド(引数);`
 
+### doNotingの書き方
+```
+// モックインスタンスが呼ばれた時、何も返さない
+doNothing().when(モックインスタンス).メソッド(任意の引数);
+```
+
+### doReturt or doNothing(とちらもvoidを返すdeleteとinsertの場合)
+- スタブ化するものに戻り値がある->doReturn
+- delete:MapperのfindByIdをスタブ化している（findByIdには戻り値がある）-> IDを使ってSkiresortを探している
+- insert:MapperのfindByIdをスタブ化する必要はない
+---
 - 存在するidを指定した時、正常にデータが返されること
     - `doReturn -when`:スタブ化したid1のデータを定義する
     - `assertThat(actual).isEqualTo()`：.isEqualToの引数に、期待値データを定義する
@@ -188,6 +200,23 @@ Finished generating test html results (0.026 secs) into: /Users/yoko/git/raiseTe
   - `doReturn`:対象のIDのスキー場情報をモック化して`when`でskiresortMapperで対象IDを検索する
   - `void`：deleteSkiresortはvoidのため、assertThatは使えない
   - staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできませんエラーが表示->インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー->staticメソッド = クラスメソッド
+
+- 新規スキー場情報を登録できること
+- ### insertSkiresortは戻り値がvoidなので、returnするべきものがない
+  ### ->`doNothing`を使う
+```
+// モックインスタンスが呼ばれた時、何も返さない
+doNothing().when(モックインスタンス).メソッド(任意の引数);
+```
+
+  
+  - ⓪`Skiresort`をインスタンス化。`createSkiresort`メソッドに渡すための実引数を定義する
+  - ①`doNothing`で`skiresortMapper.insertSkiresort(skiresort);`をスタブ化する
+  - ②`skiresortServiceImple.createSkiresort`を実行する
+  - ③`skiresortServiceImple.createSkiresort`の戻り値である`Skiresort`の値が期待通りであるか`assertThat`で検証する
+  - ④`verify`で`skiresortMapper.insertSkiresort`が1回呼ばれて引数に`Skiresort`が渡されていることを検証する
+
+
 
 
 【折りたたみ】
