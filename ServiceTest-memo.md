@@ -65,11 +65,11 @@
 doNothing().when(モックインスタンス).メソッド(任意の引数);
 ```
 
-### doReturt or doNothing(とちらもvoidを返すdeleteとinsertの場合)
+### doReturn or doNothing(deleteとinsert：どちらもvoidを返す)
 
 - スタブ化するものに戻り値がある->doReturn
-- delete:MapperのfindByIdをスタブ化している（findByIdには戻り値がある）-> IDを使ってSkiresortを探している
-- insert:MapperのfindByIdをスタブ化する必要はない
+- `delete`:`Mapper`の`findById`をスタブ化している（findByIdには戻り値がある）-> IDを使ってSkiresortを探している
+- `insert`:`Mapper`の`findById`は呼ばれていないので、findByIdをスタブ化する必要はない
 
 ---
 
@@ -126,6 +126,11 @@ doNothing().when(モックインスタンス).メソッド(任意の引数);
 - ④`skiresortServiceImpl.createSkiresort`の戻り値である`Skiresort`の値が期待通りであるか->actualとinsertSkiresortが等しいか`assertThat`
   で検証する
 - ⑤`verify`で`skiresortMapper.insertSkiresort`が1回呼ばれて引数に`Skiresort`が渡されていることを検証する
+
+`skiresortCreateForm`：属性に`id`が含まれない。`name`,`area`,`customerEvaluation`
+`actual`:`skiresortServiceImpl.createSkiresort(skiresortCreateForm)`の呼び出し結果が代入される==Skiresortのオブジェクト(==skiresort)
+`assertThat`:Skiresortのオブジェクトとactualが等しいかを検証->つまりskiresortとskiresortは等しいかを検証している
+フィールドの属性を検証しているわけではないため`id`有無とは無関係
 
 debug確認
 

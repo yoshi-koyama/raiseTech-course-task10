@@ -14,7 +14,7 @@ public class SkiresortCreateForm {
     @NotNull
     private String customerEvaluation;
 
-    public SkiresortCreateForm(int id, String name, String area, String customerEvaluation) {
+    public SkiresortCreateForm(String name, String area, String customerEvaluation) {
         this.name = name;
         this.area = area;
         this.customerEvaluation = customerEvaluation;

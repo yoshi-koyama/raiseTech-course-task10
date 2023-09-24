@@ -120,13 +120,13 @@ class SkiresortServiceImplTest {
     @Test
     public void 新規のスキー場情報を登録できること() {
         // skiresortCreateForm変数をインスタンス化して、それぞれの属性に値を設定
-        SkiresortCreateForm skiresortCreateForm = new SkiresortCreateForm(1, "CoronetPeak", "NZ", "初中級者の時に行ったので初めてのTバーに撃沈。岩だらけの広い氷山には木が１本もなくて、ボードと心が折れる人続出。上手くなってから行くべきゲレンデ");
+        SkiresortCreateForm skiresortCreateForm = new SkiresortCreateForm("CoronetPeak", "NZ", "初中級者の時に行ったので初めてのTバーに撃沈。岩だらけの広い氷山には木が１本もなくて、ボードと心が折れる人続出。上手くなってから行くべきゲレンデ");
         Skiresort skiresort = new Skiresort(0, "CoronetPeak", "NZ", "初中級者の時に行ったので初めてのTバーに撃沈。岩だらけの広い氷山には木が１本もなくて、ボードと心が折れる人続出。上手くなってから行くべきゲレンデ");
 
         // スタブ化 insertSkiresortの戻り値はvoidのためdoNothingを使用する
         doNothing().when(skiresortMapper).insertSkiresort(skiresort);
 
-        // テスト実行 actualにはSkiresortのオブジェクト（skiresortCreateForm）を代入する
+        // テスト実行 actualにはSkiresortのオブジェクト（skiresort）を代入する
         Skiresort actual = skiresortServiceImpl.createSkiresort(skiresortCreateForm);
         // skiresortServiceImple.createSkiresortの戻り値であるSkiresortオブジェクトの値が期待通りであるかを検証する
         assertThat(actual).isEqualTo(skiresort);
