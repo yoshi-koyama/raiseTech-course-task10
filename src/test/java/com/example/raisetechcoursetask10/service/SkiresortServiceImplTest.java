@@ -113,7 +113,7 @@ class SkiresortServiceImplTest {
         skiresortServiceImpl.deleteSkiresort(1);
 
         // deleteSkiresortはvoidなのでassertThat使用不可->verifyで検証する
-        verify(skiresortMapper,times(1)).findById(1);
+        verify(skiresortMapper, times(1)).findById(1);
         verify(skiresortMapper, times(1)).deleteSkiresort(1);
     }
 
@@ -123,17 +123,14 @@ class SkiresortServiceImplTest {
         SkiresortCreateForm skiresortCreateForm = new SkiresortCreateForm(1, "CoronetPeak", "NZ", "初中級者の時に行ったので初めてのTバーに撃沈。岩だらけの広い氷山には木が１本もなくて、ボードと心が折れる人続出。上手くなってから行くべきゲレンデ");
         Skiresort skiresort = new Skiresort(0, "CoronetPeak", "NZ", "初中級者の時に行ったので初めてのTバーに撃沈。岩だらけの広い氷山には木が１本もなくて、ボードと心が折れる人続出。上手くなってから行くべきゲレンデ");
 
-        // スタブ化　insertSkiresortの戻り値はvoidのためdoNothingを使用する
+        // スタブ化 insertSkiresortの戻り値はvoidのためdoNothingを使用する
         doNothing().when(skiresortMapper).insertSkiresort(skiresort);
-        // 登録テストを実行　createSkiresortメソッドを呼び出してskiresortを渡す
-        // 2回呼び出してしまうため、コメントアウト
-//        skiresortServiceImpl.createSkiresort(skiresortCreateForm);
 
-        // actualにはSkiresortのオブジェクト（skiresort）を代入する
+        // テスト実行 actualにはSkiresortのオブジェクト（skiresortCreateForm）を代入する
         Skiresort actual = skiresortServiceImpl.createSkiresort(skiresortCreateForm);
         // skiresortServiceImple.createSkiresortの戻り値であるSkiresortオブジェクトの値が期待通りであるかを検証する
         assertThat(actual).isEqualTo(skiresort);
         // verifyでskiresortMapper.insertSkiresortが1回呼ばれて引数にSkiresortが渡されていることを検証する
-        verify(skiresortMapper,times(1)).insertSkiresort(skiresort);
+        verify(skiresortMapper, times(1)).insertSkiresort(skiresort);
     }
 }

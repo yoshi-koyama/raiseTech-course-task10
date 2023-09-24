@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public class SkiresortCreateForm {
 
-    private int id;
-
     @NotNull
     private String name;
 
@@ -17,13 +15,10 @@ public class SkiresortCreateForm {
     private String customerEvaluation;
 
     public SkiresortCreateForm(int id, String name, String area, String customerEvaluation) {
-        this.id = id;
         this.name = name;
         this.area = area;
         this.customerEvaluation = customerEvaluation;
     }
-
-    public int getId() { return id; }
 
     public String getName() {
         return name;

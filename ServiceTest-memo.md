@@ -7,8 +7,7 @@
 ### `SkiresortService`:Skiresort(Entity)を操作するインターフェース
 
 - モック：偽物。本物のフリをする。依存しているオブジェクトのメソッドの呼び出し回数の検証など、依存オブジェクトが正しく利用されているかの検証をするのが主な目的。
-- スタブ：代理。代わりのものを使う。依存するオブジェクトの代用となるオブジェクトのこと。
-　　　　  任意の戻り値を設定して、予測可能な動作をするようにして使う。
+- スタブ：代理。代わりのものを使う。依存するオブジェクトの代用となるオブジェクトのこと。 任意の戻り値を設定して、予測可能な動作をするようにして使う。
 
 ## 考え方
 
@@ -53,7 +52,6 @@
 - `staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできません`:インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー
   -> staticメソッド = クラスメソッド
 
-
 ### doReturnの書き方
 
 - ` when(モックインスタンス.メソッド(引数)).thenReturn(戻り値)`;
@@ -61,16 +59,20 @@
 - ` doReturn(戻り値).when(モックインスタンス).メソッド(引数);`
 
 ### doNotingの書き方
+
 ```
 // モックインスタンスが呼ばれた時、何も返さない
 doNothing().when(モックインスタンス).メソッド(任意の引数);
 ```
 
 ### doReturt or doNothing(とちらもvoidを返すdeleteとinsertの場合)
+
 - スタブ化するものに戻り値がある->doReturn
 - delete:MapperのfindByIdをスタブ化している（findByIdには戻り値がある）-> IDを使ってSkiresortを探している
 - insert:MapperのfindByIdをスタブ化する必要はない
+
 ---
+
 - 存在するidを指定した時、正常にデータが返されること
     - `doReturn -when`:スタブ化したid1のデータを定義する
     - `assertThat(actual).isEqualTo()`：.isEqualToの引数に、期待値データを定義する
@@ -91,7 +93,8 @@ doNothing().when(モックインスタンス).メソッド(任意の引数);
 1. `skiresortMapper`の`findById`メソッドを使って更新前のデータを取得する ->`doReturn -when`:whenに更新前データを定義する
 2. `skiresortServiceImpl`オブジェクトの`updateSkiresort`メソッドを呼び出す。このメソッドは、指定したIDのスキーリゾート情報を更新する->`Lake Louise`
 3. `verify`:skiresortMapperオブジェクトのID1が1回呼ばれたことの検証。
-4. 新しい`Skiresort`インスタンスを作成し、変数`updateSkiresort`に更新後データ`Lake Louise`を設定する。-> Skiresortのインスタンス化updateSkiresortを定義しないとエラーになる
+4. 新しい`Skiresort`インスタンスを作成し、変数`updateSkiresort`に更新後データ`Lake Louise`を設定する。->
+   Skiresortのインスタンス化updateSkiresortを定義しないとエラーになる
 5. `updateSkiresort`: 戻り値がvoidなのでassertThatできない -> 代替としてverifyを使って検証する
     - `verify`:skiresortMapperオブジェクトのupdateSkiresortメソッドが1回呼ばれたことの検証
     - verifyの検証時に`updateSkiresort`を渡す-> `MockitoはskiresortMapper.updateSkiresort`に更新後の`Lake Louise`
@@ -104,26 +107,28 @@ doNothing().when(モックインスタンス).メソッド(任意の引数);
 - 指定したIDのスキー場情報を削除する
     - `doReturn`:対象のIDのスキー場情報をモック化して`when`でskiresortMapperで対象IDを検索する
     - `void`：deleteSkiresortはvoidのため、assertThatは使えない
-    - staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできませんエラーが表示->インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー->staticメソッド = クラスメソッド
+    - staticでないメソッド deleteSkiresort(int)をstaticコンテキストから参照することはできませんエラーが表示->
+      インスタンスメソッドをstaticメソッドの呼び出し方で呼び出していたのでエラー->staticメソッド = クラスメソッド
 
 - 新規スキー場情報を登録できること
 - ### insertSkiresortは戻り値がvoidなので、returnするべきものがない
   ### ->`doNothing`を使う
+
 ```
 // モックインスタンスが呼ばれた時、何も返さない
 doNothing().when(モックインスタンス).メソッド(任意の引数);
 ```
 
-
 - ①`Skiresort`をインスタンス化。`createSkiresort`メソッドに渡すための実引数を定義する
 - ①`SkiresortCreateForm`をインスタンス化してぞれぞれの属性と値を設定する
 - ②`doNothing`で`skiresortMapper.insertSkiresort(skiresort);`をスタブ化する->実際には何も返さない
-- ③`skiresortServiceImpl.createSkiresort`を実行する。新しいスキー場情報が登録される
-- ④`skiresortServiceImpl.createSkiresort`の戻り値を、新しく作成したskiresortをactualに代入する
-- ⑤`skiresortServiceImpl.createSkiresort`の戻り値である`Skiresort`の値が期待通りであるか->actualとinsertSkiresortが等しいか`assertThat`で検証する
-- ⑥`verify`で`skiresortMapper.insertSkiresort`が1回呼ばれて引数に`Skiresort`が渡されていることを検証する
+- ③`skiresortServiceImpl.createSkiresort`の戻り値を、新しく作成したskiresortをactualに代入する。新規登録のテスト実行
+- ④`skiresortServiceImpl.createSkiresort`の戻り値である`Skiresort`の値が期待通りであるか->actualとinsertSkiresortが等しいか`assertThat`
+  で検証する
+- ⑤`verify`で`skiresortMapper.insertSkiresort`が1回呼ばれて引数に`Skiresort`が渡されていることを検証する
 
 debug確認
+
 - skiresortServiceImpl.createSkiresortが返すactualの値
   ->actual = {Skiresort@4285}
   id = 0
