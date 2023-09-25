@@ -61,10 +61,10 @@ class SkiresortServiceImplTest {
     @Test
     // skiresortMapperメソッドに対するテスト
     public void 存在しないIDを指定した時エラーメッセージが返されること() {
-        // モック化　id100を指定したとき空かどうか
+        // モック化 ID100を指定したとき空かどうか
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
 
-        // test実行　memberServiceImpl.findByIdメソッドにid100を渡した時、例外をスローすることを期待している
+        // test実行　memberServiceImpl.findByIdメソッドにID100を渡した時、例外をスローすることを期待している
         assertThatThrownBy(() -> skiresortServiceImpl.findById(100)) // テスト対象メソッド
                 // throwされる例外がResourceNotFoundException（リソースがないことを通知する）を返す
                 .isInstanceOf(ResourceNotFoundException.class)
@@ -74,10 +74,10 @@ class SkiresortServiceImplTest {
 
     @Test
 
-    public void 指定したidのスキー場情報を更新できること() {
+    public void 指定したIDのスキー場情報を更新できること() {
         // モック化　returnするSkiresortは更新前のデータを設定
         doReturn(Optional.of(new Skiresort(1, "Whistler", "Canada", "11kmのロングランが楽しめる。次回は天気の良いハイシーズンに行きたい"))).when(skiresortMapper).findById(1);
-        // updateSkiresortメソッドを呼び出して、id1が持つ情報をLake Louiseに更新する
+        // updateSkiresortメソッドを呼び出して、ID1が持つ情報をLake Louiseに更新する
         skiresortServiceImpl.updateSkiresort(1, "Lake Louise", "Canada", "バンフから近くて無料シャトルバスがある。広大で美しいゲレンデ");
 
         // skiresortMapperオブジェクトのID1が1回呼ばれたことの検証（updateSkiresortは戻り値がvoidなのでassertThatでの検証ができない）

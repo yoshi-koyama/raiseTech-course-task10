@@ -100,7 +100,7 @@ doNothing().when(モックインスタンス).メソッド(任意の引数);
     - verifyの検証時に`updateSkiresort`を渡す-> `MockitoはskiresortMapper.updateSkiresort`に更新後の`Lake Louise`
       の情報が渡されたのだよねという検証までしてくれる
 
-- updateSkiresortに存在しないIdを指定したらエラーメッセージが返されること
+- updateSkiresortに存在しないIDを指定したらエラーメッセージが返されること
     - `assertThatThrownBy`:例外の検証ができる。`ResourceNotFoundException`をthrowされることを期待している
     - `isInstanceOf`:throwされた例外が`ResourceNotFoundException`のインスタンスであることを検証する
 
@@ -127,10 +127,12 @@ doNothing().when(モックインスタンス).メソッド(任意の引数);
   で検証する
 - ⑤`verify`で`skiresortMapper.insertSkiresort`が1回呼ばれて引数に`Skiresort`が渡されていることを検証する
 
-`skiresortCreateForm`：属性に`id`が含まれない。`name`,`area`,`customerEvaluation`
+`skiresortCreateForm`：リクエストボディのため属性に`ID`が含まれない。`name`,`area`,`customerEvaluation`
 `actual`:`skiresortServiceImpl.createSkiresort(skiresortCreateForm)`の呼び出し結果が代入される==Skiresortのオブジェクト(==skiresort)
-`assertThat`:Skiresortのオブジェクトとactualが等しいかを検証->つまりskiresortとskiresortは等しいかを検証している
-フィールドの属性を検証しているわけではないため`id`有無とは無関係
+`assertThat`:Skiresortのオブジェクトとactualが等しいかを検証->つまり新規作成されたスキー場情報が`Skiresort`オブジェクトであるか？を検証している
+
+`Entity`クラス：DBのテーブルに対応するためIDが必要
+`SkiresortCreateForm`クラス：FormはリクエストボディのためIDを持たない（FormはDBと対応していないため）
 
 debug確認
 
