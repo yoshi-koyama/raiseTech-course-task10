@@ -1,5 +1,6 @@
 package com.example.raisetechcoursetask10.service;
 
+import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
 import com.example.raisetechcoursetask10.entity.Skiresort;
 import com.example.raisetechcoursetask10.exception.ResourceNotFoundException;
 import com.example.raisetechcoursetask10.mapper.SkiresortMapper;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -59,10 +61,10 @@ class SkiresortServiceImplTest {
     @Test
     // skiresortMapperメソッドに対するテスト
     public void 存在しないIDを指定した時エラーメッセージが返されること() {
-        // モック化　id100を指定したとき空かどうか
+        // モック化 ID100を指定したとき空かどうか
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
 
-        // test実行　memberServiceImpl.findByIdメソッドにid100を渡した時、例外をスローすることを期待している
+        // test実行　memberServiceImpl.findByIdメソッドにID100を渡した時、例外をスローすることを期待している
         assertThatThrownBy(() -> skiresortServiceImpl.findById(100)) // テスト対象メソッド
                 // throwされる例外がResourceNotFoundException（リソースがないことを通知する）を返す
                 .isInstanceOf(ResourceNotFoundException.class)
@@ -71,10 +73,11 @@ class SkiresortServiceImplTest {
     }
 
     @Test
-    public void 指定したidのスキー場情報を更新できること() {
+
+    public void 指定したIDのスキー場情報を更新できること() {
         // モック化　returnするSkiresortは更新前のデータを設定
         doReturn(Optional.of(new Skiresort(1, "Whistler", "Canada", "11kmのロングランが楽しめる。次回は天気の良いハイシーズンに行きたい"))).when(skiresortMapper).findById(1);
-        // updateSkiresortメソッドを呼び出して、id1が持つ情報をLake Louiseに更新する
+        // updateSkiresortメソッドを呼び出して、ID1が持つ情報をLake Louiseに更新する
         skiresortServiceImpl.updateSkiresort(1, "Lake Louise", "Canada", "バンフから近くて無料シャトルバスがある。広大で美しいゲレンデ");
 
         // skiresortMapperオブジェクトのID1が1回呼ばれたことの検証（updateSkiresortは戻り値がvoidなのでassertThatでの検証ができない）
@@ -110,7 +113,24 @@ class SkiresortServiceImplTest {
         skiresortServiceImpl.deleteSkiresort(1);
 
         // deleteSkiresortはvoidなのでassertThat使用不可->verifyで検証する
-        verify(skiresortMapper,times(1)).findById(1);
+        verify(skiresortMapper, times(1)).findById(1);
         verify(skiresortMapper, times(1)).deleteSkiresort(1);
+    }
+
+    @Test
+    public void 新規のスキー場情報を登録できること() {
+        // skiresortCreateForm変数をインスタンス化して、それぞれの属性に値を設定
+        SkiresortCreateForm skiresortCreateForm = new SkiresortCreateForm("CoronetPeak", "NZ", "初中級者の時に行ったので初めてのTバーに撃沈。岩だらけの広い氷山には木が１本もなくて、ボードと心が折れる人続出。上手くなってから行くべきゲレンデ");
+        Skiresort skiresort = new Skiresort(0, "CoronetPeak", "NZ", "初中級者の時に行ったので初めてのTバーに撃沈。岩だらけの広い氷山には木が１本もなくて、ボードと心が折れる人続出。上手くなってから行くべきゲレンデ");
+
+        // スタブ化 insertSkiresortの戻り値はvoidのためdoNothingを使用する
+        doNothing().when(skiresortMapper).insertSkiresort(skiresort);
+
+        // テスト実行 actualにはSkiresortのオブジェクト（skiresort）を代入する
+        Skiresort actual = skiresortServiceImpl.createSkiresort(skiresortCreateForm);
+        // skiresortServiceImple.createSkiresortの戻り値であるSkiresortオブジェクトの値が期待通りであるかを検証する
+        assertThat(actual).isEqualTo(skiresort);
+        // verifyでskiresortMapper.insertSkiresortが1回呼ばれて引数にSkiresortが渡されていることを検証する
+        verify(skiresortMapper, times(1)).insertSkiresort(skiresort);
     }
 }

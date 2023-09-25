@@ -4,6 +4,7 @@ package com.example.raisetechcoursetask10.controller.form;
 import jakarta.validation.constraints.NotNull;
 
 public class SkiresortCreateForm {
+
     @NotNull
     private String name;
 
