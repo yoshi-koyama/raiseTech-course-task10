@@ -4,8 +4,10 @@ import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
 import com.example.raisetechcoursetask10.entity.Skiresort;
 import com.example.raisetechcoursetask10.exception.ResourceNotFoundException;
 import com.example.raisetechcoursetask10.mapper.SkiresortMapper;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,6 +22,7 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@RunWith(Enclosed.class)
 @ExtendWith(MockitoExtension.class) // JUnit5でMockitoを使うために必要
 class SkiresortServiceImplTest {
 
@@ -59,8 +62,8 @@ class SkiresortServiceImplTest {
     }
 
     @Test
-    // skiresortMapperメソッドに対するテスト
-    public void 存在しないIDを指定した時エラーメッセージが返されること() {
+    // skiresortMapperのfindByIdメソッドに対するテスト
+    public void 存在しないIDを指定した場合findByIdメソッドはエラーメッセージを返すこと() {
         // モック化 ID100を指定したとき空かどうか
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
 
@@ -93,7 +96,7 @@ class SkiresortServiceImplTest {
 
     @Test
     // updateSkiresortメソッドに対するテスト
-    public void 指定したIDが存在しない時にエラーメッセージが返されること() {
+    public void 存在しないIDを指定した場合updateSkiresortメソッドはエラーメッセージを返すこと() {
         // skiresortMapperのfindByIdメソッドが100を指定したときモック化されたメソッドが存在しないため空のOptionalを返す->IDが100のスキーリゾートが存在しない状態
         doReturn(Optional.empty()).when(skiresortMapper).findById(100);
 
