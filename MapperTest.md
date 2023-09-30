@@ -4,9 +4,9 @@
 
 ## @DBRiderの場合
 
-- @DataSet：更新前のテーブル[引数にvalue:パスを書く]
-
-- @ExpectedDataSet：期待値データ[引数にvalue:パスを書く]
+- `@DataSet`：更新前のテーブル[引数にvalue:パスを書く]
+- `@ExpectedDataSet`：期待値データ[引数にvalue:パスを書く]
+- `@Transactional`:例外が起こった時に自動でロールバックしてくれる
 
 updateSkiresortはSkiresortクラスを引数に取るわけですから、呼び出し方を変えないといけないですね。
 

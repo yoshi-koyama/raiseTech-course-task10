@@ -51,6 +51,14 @@ class SkiresortMapperTest {
     class DeleteTest {
         @Test
         @DataSet(value = "datasets/skiresort.yml")
+        @ExpectedDataSet(value = "datasets/delete-skiresort.yml")
+        @Transactional
+        void 指定したIDのスキーリゾート情報を削除すること() {
+            skiresortMapper.deleteSkiresort(3);
+        }
+
+        @Test
+        @DataSet(value = "datasets/skiresort.yml")
         @ExpectedDataSet(value = "datasets/after-delete-skiresort.yml")
         @Transactional
         void 削除時に指定したidが存在しないときテーブルのレコードが削除されないこと() {
@@ -78,6 +86,15 @@ class SkiresortMapperTest {
         void 指定したidのスキーリゾートが更新できること() {
             Skiresort skiresort = new Skiresort(1, "天元台", "山形県", "圧雪していないようで、ほぼ不正地");
             skiresortMapper.updateSkiresort(skiresort);
+        }
+
+        @Test
+        @DataSet(value = "datasets/skiresort.yml")
+        @ExpectedDataSet(value = "datasets/after-update-skiresort.yml")
+        @Transactional
+        void 更新時に指定したidが存在しないときテーブルのレコードが更新されないこと() {
+            Skiresort skiresortUpdate = new Skiresort(4, "栂池高原", "長野県", "幅1kmの初心者に最適なコースがある");
+            skiresortMapper.updateSkiresort(skiresortUpdate);
         }
     }
 }
