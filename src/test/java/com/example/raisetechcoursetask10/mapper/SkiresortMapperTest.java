@@ -97,4 +97,16 @@ class SkiresortMapperTest {
             skiresortMapper.updateSkiresort(skiresortUpdate);
         }
     }
+
+    @Nested
+    class CreateTest {
+
+        @Test
+        @DataSet(value = "datasets/create-skiresort.yml")
+        @Transactional
+        void 新規のスキーリゾートが登録できること() {
+            assertThat(skiresortMapper.findById(1))
+                    .contains(new Skiresort(1, "安比高原", "岩手県", "いつも天気が悪い。"));
+        }
+    }
 }
