@@ -1,7 +1,7 @@
 name: hello world
 
 # トリガー
-on: push
+on: pull_request
 
 # ジョブ毎に実行環境が構築されて、ジョブ内に定義されたステップが実行する
 jobs:

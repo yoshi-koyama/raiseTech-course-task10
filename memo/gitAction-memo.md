@@ -21,3 +21,10 @@ Action：実体はDockerコンテナ
 - `uses:`ジョブで指定するリポジトリ
 
 - `run:`具体的なシェルで | を使えばパイプライン処理も可能
+
+## タスク順序
+
+- Hello worldするだけのワークフローを作成
+- Pull Request をトリガーにして動くようワークフローを修正
+- Gradle で test する方法を調べる
+- GitHub Actions で Gradle で test する方法を調べてワークフローに修正
