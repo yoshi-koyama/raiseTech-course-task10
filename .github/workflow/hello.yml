@@ -1,1 +1,14 @@
+name: hello world
 
+# トリガー
+on: push
+
+# ジョブ毎に実行環境が構築されて、ジョブ内に定義されたステップが実行する
+jobs:
+  build:
+    name: greeting
+    runs-on: ubuntu-latest
+
+    # コマンドやActionなど実際の処理内容を記述する
+    steps:
+      -run: echo "Hello World!"
