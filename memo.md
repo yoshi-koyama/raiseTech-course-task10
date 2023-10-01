@@ -14,6 +14,11 @@
 - コンストラクタのテストを分ける
 - それぞれのケースにメソッド名を使用したクラス分けをしてネストする
 
+## テストコードの順番
+
+- SkiresortMapperTest：SkiresortMapperに合わせる
+- SkiresortServiceTest:SkiresortService
+
 ### Enclosed
 
 - Enclosed:JUnit4で使用され、テストの構造を整理するために使われる。テストクラスをグループ化する。
