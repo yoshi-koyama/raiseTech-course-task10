@@ -11,4 +11,4 @@ jobs:
 
     # コマンドやActionなど実際の処理内容を記述する
     steps:
-      -run: echo "Hello World!"
+      - run: echo "Hello World!"
