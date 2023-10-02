@@ -1,6 +1,6 @@
 name: Java CI with Gradle
 
-on: [ push, pull_request ]
+on: [ pull_request ]
 
 # アクション実行時にリポジトリのコンテンツに対する権限
 permissions:

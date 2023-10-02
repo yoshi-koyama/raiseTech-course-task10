@@ -34,5 +34,7 @@ GitHub上に登録したソースを動かせる環境を構築して、自動�
 - GradleでJavaのプロジェクトのビルドとテストを行う
 - docker compose upする手順をワークフロー内に組み入れること
 
+## 動作確認
+
 - `./gradlew test`:Gradleを使ってプロジェクトをビルドし、ユニットテストを実行する
 - `./gradlew clean test`:プロジェクトをクリーンにしてからテストする
