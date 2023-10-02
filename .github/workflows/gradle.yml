@@ -1,6 +1,15 @@
 name: Java CI with Gradle
 
-on: [ pull_request ]
+# opened: 新しいPull Requestが作成されたときワークフローが動く
+# synchronize: Pull Requestに対して何らかの変更(push)があったとき
+# main: mainブランチが対象
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
 
 # アクション実行時にリポジトリのコンテンツに対する権限
 permissions:
