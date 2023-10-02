@@ -22,9 +22,12 @@ jobs:
           java-version: '18'
           distribution: 'adopt'
 
+      - name: Set up Docker Compose
+        run: docker-compose -v
+
       # MySQLサーバーをdocker composeで起動
       - name: Start MySQL Server
-        run: docker-compose up -d mysql
+        run: docker-compose up -d
 
       - name: Build with Gradle
         run: ./gradlew test
