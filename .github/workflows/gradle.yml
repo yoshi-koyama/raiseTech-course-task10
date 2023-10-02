@@ -1,6 +1,6 @@
 name: Java CI with Gradle
 
-on: [ push ]
+on: [ push, pull_request ]
 
 # アクション実行時にリポジトリのコンテンツに対する権限
 permissions:
@@ -22,12 +22,13 @@ jobs:
           java-version: '18'
           distribution: 'adopt'
 
-      - name: Set up Docker Compose
-        run: docker-compose -v
-
       # MySQLサーバーをdocker composeで起動
       - name: Start MySQL Server
         run: docker-compose up -d
+
+      # MySQLサーバーが起動して接続できるまで待機する
+      - name: Wait for MySQL to start
+        run: docker-compose exec db mysqladmin ping -h localhost -u user --password-password --silent
 
       - name: Build with Gradle
         run: ./gradlew test
