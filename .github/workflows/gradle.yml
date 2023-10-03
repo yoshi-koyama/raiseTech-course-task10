@@ -1,0 +1,41 @@
+name: Java CI with Gradle
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+# アクション実行時にリポジトリのコンテンツに対する権限
+permissions:
+  contents: read
+
+# ワークフロー内のジョブ
+jobs:
+
+  # 実行環境と手順を定義
+  build:
+    runs-on: ubuntu-latest
+
+    # 実行手順
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+
+      # MySQLサーバーをdocker composeで起動
+      - name: Start MySQL Server
+        run: docker-compose up -d
+
+      - name: Build with Gradle
+        run: ./gradlew test
+
+      #ユニットテスト結果をGitHubにアップロードする
+      - name: Archive unit test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-test-report
+          path: build/reports/tests/test
