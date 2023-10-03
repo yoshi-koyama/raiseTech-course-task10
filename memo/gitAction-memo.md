@@ -12,10 +12,11 @@ GitHub上に登録したソースを動かせる環境を構築して、自動�
 - `name:`(省略可能)ワークフロー名。GitリポジトリのActionタブに表示される
 - `on:`アクションのトリガー
     - `push`や`pull_request`でトリガーのタイミングを指定可能
-    - `branches`ブランチを指定可能
-    - `opened`: Pull Requestがopenされたときにワークフローが動き出す
-    - `synchronize`: Pull Requestに対して何らかの変更(=push)があったときにワークフローが動き出す
-  
+    - `pull_request`:デフォルトで`types: [ opened, synchronize, reopened ] 3つのイベントが実行される By default
+        - `opened`: Pull Requestがopenされたときにワークフローが動き出す
+        - `synchronize`: Pull Requestに対して何らかの変更(=push)があったときにワークフローが動き出す
+        - `reopen`:Pull Requestが再度openされたにワークフローが動く
+- `branches`ブランチを指定可能
 - `permissions:`アクション実行時のリポジトリコンテンツに対する権限
 - `jabs:`ワークフローファイルで実行されるすべてのジョブをグループ化している
     - `build:`ジョブの名前。実行環境と手順を定義
