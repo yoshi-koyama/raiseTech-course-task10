@@ -1,10 +1,5 @@
 name: Java CI with Gradle
 
-# pull_request:デフォルトで types: [ opened, synchronize, reopened ] のときにワークフローが実行される
-# opened: 新しいPull Requestが作成されたとき
-# synchronize: Pull Requestに対して何らかの変更(push)があったとき
-# reopen: クローズしたPull Requestが再開されたとき
-# main: mainブランチが対象
 on:
   pull_request:
   push:
