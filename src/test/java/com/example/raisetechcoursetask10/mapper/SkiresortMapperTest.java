@@ -35,7 +35,7 @@ class SkiresortMapperTest {
                     .contains(
                             new Skiresort(1, "安比高原", "岩手県", "いつも天気が悪い。"),
                             new Skiresort(2, "月山", "山形県", "5月から雪がなくなるまで営業していて、全面コブになる。"),
-                            new Skiresort(3, "イエティ", "静岡県", "10月オープンで日本一早い。激混み。")
+                            new Skiresort(4, "イエティ", "静岡県", "10月オープンで日本一早い。激混み。")
                     );
         }
 

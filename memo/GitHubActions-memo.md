@@ -31,6 +31,8 @@
 - Pull Request をトリガーにして動くようワークフローを修正
 - Gradle で test する方法を調べる
 - GitHub Actions で Gradle で test する方法を調べてワークフローに修正
+- GitHub Actionsでファイルをzipに固めてアップロードする方法を検索
+- /gradlew test の実行結果のテストレポートをUploadするようにワークフローを修正
 
 ## gradleでtestする方法
 
@@ -41,3 +43,21 @@
 
 - `./gradlew test`:Gradleを使ってプロジェクトをビルドし、ユニットテストを実行する
 - `./gradlew clean test`:プロジェクトをクリーンにしてからテストする
+
+##  
+
+- `uses: actions/upload-artifact@v2`:`upload-artifact`を使用してアップロードを行う
+- アップロード先：GitHubのストレージ
+
+## artifact確認方法
+
+- `Actions`一覧より左のサイドバーから該当のワークフローを選択->`workflow runs`から実行の名前を選択
+  ![img.png](img.png)
+
+
+- `Artifacts`：成果物が生成されている
+  ![B396176C-EC74-484B-B95E-CF074DFB2E2C_1_105_c.jpeg](..%2F..%2F..%2F..%2FPictures%2F%E5%86%99%E7%9C%9F%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA.photoslibrary%2Fresources%2Fderivatives%2FB%2FB396176C-EC74-484B-B95E-CF074DFB2E2C_1_105_c.jpeg)
+
+
+- zipを確認
+  ![AF853ED8-C6B9-4F81-A556-0F89210E2B66_1_201_a.jpeg](..%2F..%2F..%2F..%2FPictures%2F%E5%86%99%E7%9C%9F%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA.photoslibrary%2Fresources%2Frenders%2FA%2FAF853ED8-C6B9-4F81-A556-0F89210E2B66_1_201_a.jpeg)
