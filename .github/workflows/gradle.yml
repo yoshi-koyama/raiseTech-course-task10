@@ -15,6 +15,7 @@ jobs:
 
   # 実行環境と手順を定義
   build:
+    name: Create Archive
     runs-on: ubuntu-latest
 
     # 実行手順
