@@ -1,17 +1,17 @@
 package com.example.raisetechcoursetask10.controller.form;
 
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public class SkiresortCreateForm {
 
-    @NotNull
+    @NotBlank
     private String name;
 
-    @NotNull
+    @NotBlank
     private String area;
 
-    @NotNull
+    @NotBlank
     private String customerEvaluation;
 
     public SkiresortCreateForm(String name, String area, String customerEvaluation) {
