@@ -62,18 +62,15 @@ public class SkiresortController {
     }
 
     @PostMapping("/skiresorts")
-    public ResponseEntity<SkiresortResponse> createSkiresort(@RequestBody @Valid SkiresortCreateForm skiresortCreateForm, HttpServletRequest request) {
+    public ResponseEntity<SkiresortResponse> createSkiresort(@RequestBody @Valid SkiresortCreateForm skiresortCreateForm, UriComponentsBuilder uriBuilder) {
         Skiresort skiresort = skiresortService.createSkiresort(skiresortCreateForm);
 
         // skiresortオブジェクトを元にレスポンス用のオブジェクトを生成
         SkiresortResponse skiresortResponse = new SkiresortResponse(skiresort);
-        // URI:リソースを一意に識別するための識別子
+        // URI:リソースの位置や名前を特定するためのもの
         // HttpServletRequestのインスタンスでリクエストの中身を取得し、動的なURLを生成
-        URI url = UriComponentsBuilder.fromUriString(request.getRequestURI())
-                .path("/skiresorts/{id}")
-                .buildAndExpand(skiresort.getId())
-                .toUri();
-        return ResponseEntity.created(url).body(skiresortResponse);
+        URI location = uriBuilder.path("/skiresorts/{id}").buildAndExpand(skiresort.getId()).toUri();
+        return ResponseEntity.created(location).body(skiresortResponse);
     }
 
     @PatchMapping("/skiresorts/{id}")

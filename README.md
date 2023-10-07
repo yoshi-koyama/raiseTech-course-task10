@@ -1,6 +1,10 @@
 # raiseTech-course-task10
 
-```- skiresortMapper.update　
+## アプリケーションの概要
+
+人気のスキー場の名称、エリア、顧客評価に関するCRUD処理と自動テストを行えるアプリケーションです。
+
+```- skiresortMapper.update
 インスタンスメソッドの呼び出し
 SkiresortMapperクラスのインスタンスが持つupdateメソッドを呼び出していることを意味している。
 （SkiresortMapperクラスにupdateメソッドがあるため使用可）
