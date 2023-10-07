@@ -19,6 +19,7 @@ GET、POST、PUT、DELETE
 
 UriComponentsBuilder：URLを構築するためのクラス
 Locationヘッダの値：新しいURIである必要がある
+登録APIの場合：新規に作成されたリソースのアクセス先となるURLを設定する
 
 新しいスキーリゾートを作成する際に`UriComponentsBuilder`を使って新しいスキーリゾートのURIを作成
 ->`ResponseEntity.created()`によってLocationヘッダーにセットする
