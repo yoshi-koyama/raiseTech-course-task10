@@ -1,0 +1,9 @@
+skiresort:
+  - name: "LakeLouise"
+    area: "Canada"
+
+  - name: "Vail"
+    area: "Colorado"
+
+  - name: "Zermatt"
+    area: "Swiss"
