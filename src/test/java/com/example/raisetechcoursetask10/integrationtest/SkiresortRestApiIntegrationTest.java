@@ -26,7 +26,7 @@ public class SkiresortRestApiIntegrationTest {
     MockMvc mockMvc;
 
     @Test
-    @DataSet(value = "datasets/skiresort.yml")
+    @DataSet(value = "datasets/it-skiresort.yml")
     @Transactional
     void スキーリゾートを全件取得したときステータスコードが200を返すこと() throws Exception {
         String response = mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts"))
@@ -36,22 +36,16 @@ public class SkiresortRestApiIntegrationTest {
         JSONAssert.assertEquals("""
                 [
                     {
-                        "id": 1,
-                        "name": "安比高原",
-                        "area": "岩手県",
-                        "customerEvaluation": "いつも天気が悪い。"
+                        "name": "LakeLouise",
+                        "area": "Canada"
                     },
                     {
-                        "id": 2,
-                        "name": "月山",
-                        "area": "山形県",
-                        "customerEvaluation": "5月から雪がなくなるまで営業していて、全面コブになる。"
+                        "name": "Vail",
+                        "area": "Colorado"
                     },
                     {
-                        "id": 3,
-                        "name": "イエティ",
-                        "area": "静岡県",
-                        "customerEvaluation": "10月オープンで日本一早い。激混み。"
+                        "name": "Zermatt",
+                        "area": "Swiss"
                     }
                 ]
                 """, response, JSONCompareMode.STRICT);

@@ -11,3 +11,8 @@
 `AutoConfigureMockMvc`:自動でMockMvcを行う
 
 テキストブロック:`"""`ダブルウォーと3つでラップした文字列をひとつの塊として扱う(Java13以降)
+
+### すべてのスキーリゾートを全件取得したときステータスコードが200を返すこと
+
+- `@DataSet(value = "datasets/it-skiresort.yml")`:テスト初期データ。データセットなのでSkiresortで定義しているデータを設定すること
+- `JSONAssert`:初期データとの比較。期待値を定義するが、HTTPレスポンスなのでSkiresortResponseで定義しているデータのみを設定すること
