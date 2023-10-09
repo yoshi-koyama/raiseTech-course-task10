@@ -26,7 +26,7 @@ public class SkiresortRestApiIntegrationTest {
     MockMvc mockMvc;
 
     @Test
-    @DataSet(value = "datasets/it-skiresort.yml")
+    @DataSet(value = "datasets/it/skiresort.yml")
     @Transactional
     void スキーリゾートを全件取得したときステータスコードが200を返すこと() throws Exception {
         String response = mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts"))
@@ -49,6 +49,5 @@ public class SkiresortRestApiIntegrationTest {
                     }
                 ]
                 """, response, JSONCompareMode.STRICT);
-        System.out.println(response);
     }
 }
