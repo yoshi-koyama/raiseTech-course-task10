@@ -50,4 +50,12 @@ public class SkiresortRestApiIntegrationTest {
                 ]
                 """, response, JSONCompareMode.STRICT);
     }
+
+    @Test
+    @DataSet(value = "datasets/it/skiresort.yml")
+    @Transactional
+    void 存在しないIDのスキーリゾートを取得した時ステータスコードが404エラーを返すこと() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 99))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }
