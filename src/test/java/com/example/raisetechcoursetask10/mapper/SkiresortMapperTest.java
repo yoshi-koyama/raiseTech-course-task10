@@ -102,7 +102,7 @@ class SkiresortMapperTest {
 
         @Test
         @DataSet(value = "datasets/ut/skiresort.yml")
-        @ExpectedDataSet(value = "datasets/after-delete-skiresort.yml")
+        @ExpectedDataSet(value = "datasets/ut/after-delete-skiresort.yml")
         @Transactional
         void 削除時に指定したidが存在しないときテーブルのレコードが削除されないこと() {
             skiresortMapper.deleteSkiresort(4);
