@@ -64,6 +64,5 @@ public class SkiresortRestApiIntegrationTest {
             mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 99))
                     .andExpect(MockMvcResultMatchers.status().isNotFound());
         }
-
     }
 }
