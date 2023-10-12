@@ -64,5 +64,29 @@ public class SkiresortRestApiIntegrationTest {
             mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 99))
                     .andExpect(MockMvcResultMatchers.status().isNotFound());
         }
+
+        @Test
+        @DataSet(value = "datasets/it/skiresort.yml")
+        @Transactional
+        void 存在するIDのスキーリゾートを取得した時ステータスコードが200を返すこと() throws Exception {
+            String response = mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 3))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+            JSONAssert.assertEquals("""
+                        {
+                            "name": "Zermatt",
+                            "area": "Swiss"
+                        }
+                    """, response, JSONCompareMode.STRICT);
+        }
+
+        @Test
+        @DataSet(value = "datasets/it/skiresort.yml")
+        @Transactional
+        void nullを指定して取得した時ステータスコードが400を返すこと() throws Exception {
+            mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 1))
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest());
+        }
     }
 }
