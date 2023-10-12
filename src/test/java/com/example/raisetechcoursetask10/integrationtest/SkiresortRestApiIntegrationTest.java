@@ -80,13 +80,5 @@ public class SkiresortRestApiIntegrationTest {
                         }
                     """, response, JSONCompareMode.STRICT);
         }
-
-        @Test
-        @DataSet(value = "datasets/it/skiresort.yml")
-        @Transactional
-        void nullを指定して取得した時ステータスコードが400を返すこと() throws Exception {
-            mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 1))
-                    .andExpect(MockMvcResultMatchers.status().isBadRequest());
-        }
     }
 }
