@@ -34,9 +34,17 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew test
 
-      #ユニットテスト結果をGitHubにアップロードする
+      # ユニットテスト結果をGitHubにアップロードする
       - name: Archive unit test results
         uses: actions/upload-artifact@v2
         with:
           name: unit-test-report
           path: build/reports/tests/test
+
+      # gradleのcacheクリア
+      # gradle-wrapper.propertiesの内容を下に一意の識別子を作成
+      - name: Clear Gradle Cache
+        uses: actions/cache@v3
+        with:
+          path: "~/.gradle/caches"
+          key: gradle -${{ hashFiles('**/gradle-wrapper.properties') }}
