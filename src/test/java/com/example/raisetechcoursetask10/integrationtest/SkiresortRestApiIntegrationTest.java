@@ -57,13 +57,6 @@ public class SkiresortRestApiIntegrationTest {
 
     @Nested
     class ReadByIdTest {
-        @Test
-        @DataSet(value = "datasets/it/skiresort.yml")
-        @Transactional
-        void 存在しないIDのスキーリゾートを取得した時ステータスコードが404エラーを返すこと() throws Exception {
-            mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 99))
-                    .andExpect(MockMvcResultMatchers.status().isNotFound());
-        }
 
         @Test
         @DataSet(value = "datasets/it/skiresort.yml")
@@ -79,6 +72,14 @@ public class SkiresortRestApiIntegrationTest {
                             "area": "Swiss"
                         }
                     """, response, JSONCompareMode.STRICT);
+        }
+
+        @Test
+        @DataSet(value = "datasets/it/skiresort.yml")
+        @Transactional
+        void 存在しないIDのスキーリゾートを取得した時ステータスコードが404エラーを返すこと() throws Exception {
+            mockMvc.perform(MockMvcRequestBuilders.get("/skiresorts/{id}", 99))
+                    .andExpect(MockMvcResultMatchers.status().isNotFound());
         }
     }
 }
