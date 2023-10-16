@@ -44,7 +44,7 @@
 - `./gradlew test`:Gradleを使ってプロジェクトをビルドし、ユニットテストを実行する
 - `./gradlew clean test`:プロジェクトをクリーンにしてからテストする
 
-##  
+##       
 
 - `uses: actions/upload-artifact@v2`:`upload-artifact`を使用してアップロードを行う
 - アップロード先：GitHubのストレージ
@@ -61,3 +61,22 @@
 
 - zipを確認
   ![AF853ED8-C6B9-4F81-A556-0F89210E2B66_1_201_a.jpeg](..%2F..%2F..%2F..%2FPictures%2F%E5%86%99%E7%9C%9F%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA.photoslibrary%2Fresources%2Frenders%2FA%2FAF853ED8-C6B9-4F81-A556-0F89210E2B66_1_201_a.jpeg)
+
+## cacheクリア
+
+- ワークフロー内で時間がかかっているログを確認
+  ![A3B9041D-31C2-4EBC-BD82-C1025AD0AA10_1_105_c.jpeg](..%2F..%2F..%2F..%2FPictures%2F%E5%86%99%E7%9C%9F%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA.photoslibrary%2Fresources%2Fderivatives%2FA%2FA3B9041D-31C2-4EBC-BD82-C1025AD0AA10_1_105_c.jpeg)
+
+
+- Actions->Cteate Archive->所要時間が長いlogを選択->
+  どの段階で時間がかかっているか確認
+- ![3D3943EB-6A45-45D0-845E-4D76D43CF4BD_1_105_c.jpeg](..%2F..%2F..%2F..%2FPictures%2F%E5%86%99%E7%9C%9F%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA.photoslibrary%2Fresources%2Fderivatives%2F3%2F3D3943EB-6A45-45D0-845E-4D76D43CF4BD_1_105_c.jpeg)
+
+.github/workflows/gradle.yml
+jobs:/build/stepsに追記
+
+- `uses:` キャッシュを操作するためのアクション
+- `with:` アクションの設定を記述
+    - `path:` Gradleのキャッシュが保存されている場所
+    - `key:` キャッシュを特定するキーで、ワイルドカードによってビルドファイルや設定ファイルが変更された場合、keyの一部としてハッシュ化する->
+      ファイルが変更されるたびに新しいユニークなキーが生成されてcatchが行われる
