@@ -98,7 +98,6 @@ public class SkiresortRestApiIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content("""
                                     {
-                                        "id": 4,
                                         "name": "Whistler",
                                         "area": "Canada",
                                         "customerEvaluation": "Obtained Canadian snowboard instructor license"
