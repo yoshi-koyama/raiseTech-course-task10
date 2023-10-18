@@ -26,3 +26,16 @@
 - `NOT_FOUND`(404):サーバがリクエストされたリソースを見つけられない。存在しないエンドポイント、リソースをリクエストした場合
 - リクエストを行いHTTPステータスコードのみ検証する：レスポンスの内容を検証する必要がないので、テスト初期値のみの設定で良い
 - `/skiresorts/{id},99`:エンドポイントid99(存在しないID99)でスキーリゾートをリクエストしていている->`isNotFound()`400が適している
+
+### 新しいスキーリゾートを登録する
+
+- `@DataSet`: createの場合idは自動採番されるため、指定するとkey重複を起こす場合がある
+- `@ExpectedDataSet` :テスト期待値
+- `ignoreCols = "id"`: idの列を比較対象から除外する
+- `isCreated()`: 登録は201
+
+- SkiresortControllerのcreateSkiresortメソッドに設定しているreturn部分を確認して、レスポンスする内容を設定する
+
+リクエストボディを書く
+
+- `JSONAssert.assertEquals`: JSON形式で新規登録する情報を全て記述する(SkiresortResponseのフィールドに合わせること)
