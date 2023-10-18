@@ -91,7 +91,7 @@ public class SkiresortRestApiIntegrationTest {
     class CreateTest {
         @Test
         @DataSet(value = "datasets/it/skiresort.yml")
-        @ExpectedDataSet(value = "datasets/it/create-skiresort.yml", ignoreCols = {"id", "customerEvaluation"})
+        @ExpectedDataSet(value = "datasets/it/create-skiresort.yml", ignoreCols = {"id"})
         @Transactional
         void 新規のスキーリゾートを登録した時ステータスコードが201を返すこと() throws Exception {
             String response = mockMvc.perform(MockMvcRequestBuilders.post("/skiresorts")
@@ -105,6 +105,13 @@ public class SkiresortRestApiIntegrationTest {
                                     """))
                     .andExpect(MockMvcResultMatchers.status().isCreated())
                     .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+            JSONAssert.assertEquals("""
+                    {
+                        "name": "Whistler",
+                        "area": "Canada"
+                    }                  
+                    """, response, JSONCompareMode.STRICT);
         }
     }
 }

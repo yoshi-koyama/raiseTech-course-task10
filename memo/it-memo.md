@@ -35,3 +35,7 @@
 - `isCreated()`: 登録は201
 
 - SkiresortControllerのcreateSkiresortメソッドに設定しているreturn部分を確認して、レスポンスする内容を設定する
+
+リクエストボディを書く
+
+- `JSONAssert.assertEquals`: JSON形式で新規登録する情報を全て記述する(SkiresortResponseのフィールドに合わせること)
