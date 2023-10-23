@@ -13,13 +13,14 @@
 
 `MockMvc`:リクエストの検証
 `AutoConfigureMockMvc`:自動でMockMvcを行う
+`.content()`:リクエストボディを設定する
 
 テキストブロック:`"""`ダブルウォーと3つでラップした文字列をひとつの塊として扱う(Java13以降)
 
 ### すべてのスキーリゾートを全件取得したときステータスコードが200を返すこと
 
 - `@DataSet(value = "datasets/it-skiresort.yml")`:テスト初期データ。データセットなのでSkiresortで定義しているデータを設定すること
-- `JSONAssert`:初期データとの比較。期待値を定義するが、HTTPレスポンスなのでSkiresortResponseで定義しているデータのみを設定すること
+- `JSONAssert`:初期データとのJSONデータの比較。期待値を定義するが、HTTPレスポンスなのでSkiresortResponseで定義しているデータのみを設定すること
 
 ### 存在しないIDのスキーリゾートを取得した時ステータスコードが404エラーを返すこと
 
@@ -39,3 +40,47 @@
 リクエストボディを書く
 
 - `JSONAssert.assertEquals`: JSON形式で新規登録する情報を全て記述する(SkiresortResponseのフィールドに合わせること)
+
+### IDを指定してスキーリゾート情報を更新する
+
+- `isOK()`: リクエスト成功
+- SkiresortUpdateFormのフィールドの値を設定する
+
+リクエストボディ
+
+- `JSONAssert.assertEquals`: SkiresortControllerのReturnに定義されているレスポンス内容をJSON形式で書く
+
+### 存在しないIDを指定してスキーリゾートを更新すると期待通りのエラーが返ってくる
+
+- ISO 8601形式:日付と時刻を「T」で区切る
+- 時差:日本はUTC(協定世界時)から+9
+- 表記法:yyyy-MM-ddThh:mm:ss:SSSSSSSSSXXX
+- yyyy:年（4文字）
+- MM:月（2文字）
+- dd:日（2文字）
+- T:T文字（日付と時刻を区別するための文字）
+- HH:時（2文字）
+- mm:分（2文字）
+- ss:秒（2文字）
+- SSSSSSSSS:ナノ秒（9文字）
+- XXX:タイムゾーンオフセット
+
+リアルタイムでテスト不可の理由
+->timestampの比較:テスト実行のタイミングや実行速度がリアルタイムでは困難なため、厳密な一致を求めることが難しい
+
+- LocalDateTime nowDate = LocalDateTime.now(); 特定のタイムゾーンに依存しない場合の現在自刻の取得
+- ZoneDataTime now = ZonedDateTime now(); プログラムを実行した場所（国）での現在自刻の取得
+
+- `"/skiresorts/{id}", 100`:存在しないIDのパスを指定
+- assert.Equalsの内容
+    - "path":期待する値のパス->/skiresorts/100
+    - "status":期待するステータスコード
+    - "message":ステータスコードの対応したエラーメッセージ
+    - "timestamp":今回は適当。ISO 8601形式にしたがって記載
+    - "error":ステータスコードに対応したエラー
+- `JSONCompareMode.STRICT`:JSON比較モードで、全てのフィールドが一致していること
+- `((o1, o2) -> true)`:object1,2は常にtrueを返す->timestampの値は比較除外される
+
+### よく出るエラー
+
+- Could not create dataset for test:テスト実行中datasetを作成できなかったor正しく読み込めなかった->パスが合ってるか？
