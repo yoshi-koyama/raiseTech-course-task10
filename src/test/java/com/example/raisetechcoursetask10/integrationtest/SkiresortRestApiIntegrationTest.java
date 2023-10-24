@@ -172,5 +172,24 @@ public class SkiresortRestApiIntegrationTest {
                         """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
             }
         }
+
+        @Nested
+        class DeleteTest {
+            @Test
+            @DataSet(value = "datasets/it/skiresort.yml")
+            @ExpectedDataSet(value = "datasets/it/delete-skiresort.yml")
+            @Transactional
+            void 存在するIDを指定してスキーリゾートを削除したときステータスコード200を返すこと() throws Exception {
+                String response = mockMvc.perform(MockMvcRequestBuilders.delete("/skiresort/{id}", 3))
+                        .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+                JSONAssert.assertEquals("""
+                        {
+                            "message": "successfully deleted"
+                        }
+                        """, response, JSONCompareMode.STRICT);
+            }
+        }
     }
 }
