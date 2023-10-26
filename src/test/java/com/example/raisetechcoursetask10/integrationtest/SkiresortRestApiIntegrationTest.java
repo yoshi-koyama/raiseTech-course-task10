@@ -172,5 +172,44 @@ public class SkiresortRestApiIntegrationTest {
                         """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
             }
         }
+
+        @Nested
+        class DeleteTest {
+            @Test
+            @DataSet(value = "datasets/it/skiresort.yml")
+            @ExpectedDataSet(value = "datasets/it/delete-skiresort.yml")
+            @Transactional
+            void 存在するIDを指定してスキーリゾートを削除したときステータスコード200を返すこと() throws Exception {
+                String response = mockMvc.perform(MockMvcRequestBuilders.delete("/skiresorts/{id}", 3))
+                        .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+                JSONAssert.assertEquals("""
+                        {
+                            "message": "successfully deleted"
+                        }
+                        """, response, JSONCompareMode.STRICT);
+            }
+
+            @Test
+            @DataSet(value = "datasets/it/skiresort.yml")
+            @Transactional
+            void 存在しないIDのスキーリゾートを削除した時ステータスコードは404を返すこと() throws Exception {
+                String response = mockMvc.perform(MockMvcRequestBuilders.delete("/skiresorts/{id}", 5))
+                        .andExpect(status().isNotFound())
+                        .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+                JSONAssert.assertEquals("""
+                        {
+                            "path": "/skiresorts/5",
+                            "status": "404",
+                            "message": "resource not found",
+                            "timestamp": "2023-10-26T07:00:00:123456789+09:00[JST/Tokyo]",
+                            "error": "Not Found"
+                        }
+                                                
+                        """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
+            }
+        }
     }
 }

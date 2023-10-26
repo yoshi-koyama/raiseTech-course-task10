@@ -1,0 +1,11 @@
+skiresort:
+
+  - id: 1
+    name: "LakeLouise"
+    area: "Canada"
+    customerEvaluation: "Canada's most beautiful skiresort area"
+
+  - id: 2
+    name: "Vail"
+    area: "Colorado"
+    customerEvaluation: "It's the most popular place in America, but I've never been there yet"
