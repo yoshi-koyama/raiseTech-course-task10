@@ -18,3 +18,16 @@
 - 空文字:文字列が0のこと。
 - null:箱も中身もない。何も存在しない。
 - blanc:箱はあるけど何も入ってない。半角スペース、全角スペースのこと。
+
+@Validated:@Validを拡張したSpringの機能
+@Validated:@RequestParamアノテーションを使用する場合
+@Valid:Jakarta Bean Validationで定義される
+
+### 仮説を立ててデバッグ実行
+
+@ExceptionHandlerで通るか？（問題がなければ通らない->問題が0個なら通らない）
+`MethodArgumentNotValidExceptjon`:Controllerに`@Valid`や`@Validated`をつけたuserPostrequestをentityでバリデーションした（@NotBlankなど）結果
+->Not Valid（正しくない）例外になるハンドラーである
+->postリクエストを送ると返ってくる（返ってくる＝失敗）
+->正しい場合:例外は出ない
+->ExceptionHandlerを通る場合またはControllerを通る場合に分かれる

@@ -2,9 +2,9 @@ DROP TABLE IF EXISTS skiresort;
 
 CREATE TABLE skiresort (
   id int unsigned AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
-  area VARCHAR(100) NOT NULL,
-  customerEvaluation VARCHAR(255) NOT NULL,
+  name VARCHAR(20) NOT NULL,
+  area VARCHAR(20) NOT NULL,
+  customerEvaluation VARCHAR(100) NOT NULL,
   PRIMARY KEY(id)
 );
 
