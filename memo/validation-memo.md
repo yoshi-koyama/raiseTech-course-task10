@@ -31,3 +31,8 @@
 ->postリクエストを送ると返ってくる（返ってくる＝失敗）
 ->正しい場合:例外は出ない
 ->ExceptionHandlerを通る場合またはControllerを通る場合に分かれる
+
+### Validator
+
+- SkiresortUpdateFormにバリデーション設定
+- @Size:1文字〜20文字
