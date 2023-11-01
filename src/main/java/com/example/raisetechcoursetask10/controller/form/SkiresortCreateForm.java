@@ -6,15 +6,15 @@ import jakarta.validation.constraints.Size;
 
 public class SkiresortCreateForm {
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 20, message = "1文字以上20文字以下で入力してください")
     @NotBlank
     private String name;
 
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 20, message = "areaは1文字以上20文字以下で入力してください")
     @NotBlank
     private String area;
 
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, message = "customerEvaluationは1文字以上50文字以下で入力してください")
     @NotBlank
     private String customerEvaluation;
 
