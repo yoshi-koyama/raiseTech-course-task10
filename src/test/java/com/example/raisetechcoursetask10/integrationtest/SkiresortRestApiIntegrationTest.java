@@ -135,6 +135,32 @@ public class SkiresortRestApiIntegrationTest {
         }
 
         @Test
+        @Transactional
+        void nameに21文字登録した時ステータスコードが400を返すこと() throws Exception {
+            String response = mockMvc.perform(MockMvcRequestBuilders.post("/skiresorts")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                        "name": "aaaaaaaaaaaaaaaaaaaaa",
+                                        "area": "Canada",
+                                        "customerEvaluation": "The scenery was very beautiful"   
+                                    }
+                                    """))
+                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                    .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+            JSONAssert.assertEquals("""
+                    {
+                        "status": "400",
+                        "message": "1文字以上20文字以下で入力してください",
+                        "timestamp": "2023-11-02T06:00.123456789+09:00[JST/Tokyo]",
+                        "error": "Bad Request"
+                    }
+                    // timestampは比較対象外
+                    """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
+        }
+
+        @Test
         public void mameに0文字登録した時バリデーションエラーとなること() throws Exception {
             SkiresortCreateForm createForm = new SkiresortCreateForm("", "Canada", "The scenery was very beautiful");
             var violations = validator.validate(createForm);
@@ -265,7 +291,7 @@ public class SkiresortRestApiIntegrationTest {
                         "timestamp": "2023-10-26T07:00:00:123456789+09:00[JST/Tokyo]",
                         "error": "Not Found"
                     }
-                                            
+                    // timestampは比較対象外                        
                     """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
         }
     }

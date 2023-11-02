@@ -52,3 +52,6 @@
     - `violations`:リストの各要素に対して、ConstraintViolationオブジェクト(nameやarea)を文字列に変換し、ConstraintViolationオブジェクト(
       バリデーションエラーが発生した際に生成されるオブジェクト)からエラーメッセージを取得する
     - `containsExactlyInAnyOrder`:期待されるプロパティパス(バリデーションエラーが発生した場所)、エラーメッセージと実際の結果が一致することを検証する
+
+- STRICT:日付と時刻を厳密に解決する
+- LENIENT:日付けと時刻を厳密ではない方法で解決する
