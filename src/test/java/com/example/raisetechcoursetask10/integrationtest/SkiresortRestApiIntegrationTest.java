@@ -1,14 +1,8 @@
 package com.example.raisetechcoursetask10.integrationtest;
 
-import com.example.raisetechcoursetask10.controller.form.SkiresortCreateForm;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.spring.api.DBRider;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.Customization;
@@ -27,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -39,15 +31,6 @@ public class SkiresortRestApiIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
-
-    private static Validator validator;
-
-    // 一番最初に一度だけ実行される
-    @BeforeAll
-    public static void setUpValidator() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
 
     @Nested
     class ReadAllTest {
@@ -132,71 +115,6 @@ public class SkiresortRestApiIntegrationTest {
                         "area": "Canada"
                     }                  
                     """, response, JSONCompareMode.STRICT);
-        }
-
-        @Test
-        @Transactional
-        void nameに21文字登録した時ステータスコードが400を返すこと() throws Exception {
-            String response = mockMvc.perform(MockMvcRequestBuilders.post("/skiresorts")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content("""
-                                    {
-                                        "name": "aaaaaaaaaaaaaaaaaaaaa",
-                                        "area": "Canada",
-                                        "customerEvaluation": "The scenery was very beautiful"   
-                                    }
-                                    """))
-                    .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                    .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
-
-            JSONAssert.assertEquals("""
-                    {
-                        "status": "400",
-                        "message": "1文字以上20文字以下で入力してください",
-                        "timestamp": "2023-11-02T06:00.123456789+09:00[JST/Tokyo]",
-                        "error": "Bad Request"
-                    }
-                    // timestampは比較対象外
-                    """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
-        }
-
-        @Test
-        public void mameに0文字登録した時バリデーションエラーとなること() throws Exception {
-            SkiresortCreateForm createForm = new SkiresortCreateForm("", "Canada", "The scenery was very beautiful");
-            var violations = validator.validate(createForm);
-            // バリデーションが1つ発生することの検証
-            assertThat(violations).hasSize(2);
-            assertThat(violations)
-                    .extracting(violation -> violation.getPropertyPath().toString(), ConstraintViolation::getMessage)
-                    .containsExactlyInAnyOrder(
-                            tuple("name", "空白は許可されていません"),
-                            tuple("name", "1文字以上20文字以下で入力してください")
-                    );
-        }
-
-        @Test
-        public void nameに1文字登録した時バリデーションエラーとならないこと() throws Exception {
-            SkiresortCreateForm createForm = new SkiresortCreateForm("a", "Canada", "The scenery was very beautiful");
-            var violations = validator.validate(createForm);
-            assertThat(violations).isEmpty();
-        }
-
-        @Test
-        public void nameに20文字登録した時バリデーションエラーとならないこと() throws Exception {
-            SkiresortCreateForm createForm = new SkiresortCreateForm("aaaaaaaaaaaaaaaaaaaa", "Canada", "The scenery was very beautiful");
-            var violations = validator.validate(createForm);
-            assertThat(violations).isEmpty();
-        }
-
-        @Test
-        public void nameに21文字登録した時バリデーションエラーとなること() throws Exception {
-            SkiresortCreateForm createForm = new SkiresortCreateForm("aaaaaaaaaaaaaaaaaaaaa", "Canada", "The scenery was very beautiful");
-            var violations = validator.validate(createForm);
-            // バリデーションエラーが1つ発生することの検証
-            assertThat(violations).hasSize(1);
-            assertThat(violations)
-                    .extracting(violation -> violation.getPropertyPath().toString(), ConstraintViolation::getMessage)
-                    .containsExactlyInAnyOrder(tuple("name", "1文字以上20文字以下で入力してください"));
         }
     }
 

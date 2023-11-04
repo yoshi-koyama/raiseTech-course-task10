@@ -52,7 +52,7 @@ public class SkiresortController {
             URI location = uriBuilder.path("/skiresorts/{id}").buildAndExpand(skiresort.getId()).toUri();
             return ResponseEntity.created(location).body(skiresortResponse);
         } catch (Exception e) {
-            // 例外が発生した場合、BadRequestとエラーメッセージを返す
+            // 例外が発生した場合、HTTPステータスコード400とエラーメッセージを返す
             return ResponseEntity.badRequest().body(Map.of("message", "1文字以上20文字以下で入力してください"));
         }
     }
