@@ -44,3 +44,9 @@ jobs:
         with:
           name: unit-test-report
           path: build/reports/tests/test
+
+      # ロケールを日本語に設定する
+      - name: Set Locale
+        run: |
+          sudo locale-gen ja_JP.UTP-8
+          sudo update-locale LANG=ja_JP.UTF-8

@@ -45,7 +45,7 @@
 - `./gradlew test`:Gradleを使ってプロジェクトをビルドし、ユニットテストを実行する
 - `./gradlew clean test`:プロジェクトをクリーンにしてからテストする
 
-##             
+##               
 
 - `uses: actions/upload-artifact@v2`:`upload-artifact`を使用してアップロードを行う
 - アップロード先：GitHubのストレージ
@@ -81,3 +81,9 @@ jobs:/build/stepsに追記
     - `path:` Gradleのキャッシュが保存されている場所
     - `key:` キャッシュを特定するキーで、ワイルドカードによってビルドファイルや設定ファイルが変更された場合、keyの一部としてハッシュ化する->
       ファイルが変更されるたびに新しいユニークなキーが生成されてcatchが行われる
+
+### エラー対策
+
+- テストコード期待値は日本語、実際の値は英語のためassertionエラー->GitHub Actionsのサーバlocale がen_USになっているから
+    - GitHub Actions：localeを日本語に設定または
+    - テストコード: localeを日本語に設定のどちらか
