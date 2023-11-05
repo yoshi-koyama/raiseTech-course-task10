@@ -24,6 +24,7 @@
     - `uses:`ジョブで指定するリポジトリ
 - `run:`具体的なシェルで | を使えばパイプライン処理も可能
 - `run-name:`pushやpull_requestイベントによってトリガーされるワークフローの場合、コミットメッセージとして設定される
+- `if: always()`:Archive unit test resultsステップに記述することで、常に実行されるようになる
 
 ## タスク順序
 
@@ -44,7 +45,7 @@
 - `./gradlew test`:Gradleを使ってプロジェクトをビルドし、ユニットテストを実行する
 - `./gradlew clean test`:プロジェクトをクリーンにしてからテストする
 
-##            
+##             
 
 - `uses: actions/upload-artifact@v2`:`upload-artifact`を使用してアップロードを行う
 - アップロード先：GitHubのストレージ
