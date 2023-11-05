@@ -26,7 +26,6 @@ jobs:
         with:
           java-version: '18'
           distribution: 'adopt'
-          gradle-version: '8.1.1'
 
       # MySQLサーバーをdocker composeで起動
       - name: Start MySQL Server
