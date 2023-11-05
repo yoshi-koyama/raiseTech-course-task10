@@ -37,7 +37,7 @@ jobs:
       # ユニットテスト結果をGitHubにアップロードする
       # if: always()失敗した時も常に実行する
       - name: Archive unit test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: unit-test-report
