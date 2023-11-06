@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
@@ -23,10 +25,17 @@ public class SkiresortCreateFormTest {
         validator = factory.getValidator();
     }
 
+    @BeforeAll
+    public static void setUpLocale() {
+        Locale.setDefault(new Locale("ja", "JP")); // ロケールを日本語に設定
+    }
+
     @Nested
     class NameTest {
         @Test
         public void nameに1文字未満を登録した時バリデーションエラーとなること() {
+            Locale.setDefault(Locale.JAPANESE);
+
             SkiresortCreateForm createForm = new SkiresortCreateForm("", "Canada", "The scenery was very beautiful");
             var violations = validator.validate(createForm);
             // バリデーションが2つ発生することの検証
@@ -37,6 +46,8 @@ public class SkiresortCreateFormTest {
                             tuple("name", "空白は許可されていません"),
                             tuple("name", "1文字以上20文字以下で入力してください")
                     );
+
+            Locale.setDefault(Locale.getDefault());
         }
 
         @Test
