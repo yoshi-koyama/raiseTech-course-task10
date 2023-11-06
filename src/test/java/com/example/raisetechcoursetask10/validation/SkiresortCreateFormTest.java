@@ -35,7 +35,7 @@ public class SkiresortCreateFormTest {
 
         @Test
         public void nameに1文字未満を登録した時バリデーションエラーとなること() {
-            Locale.setDefault(Locale.JAPAN);
+//            Locale.setDefault(Locale.JAPAN);
 
             SkiresortCreateForm createForm = new SkiresortCreateForm("", "Canada", "The scenery was very beautiful");
             var violations = validator.validate(createForm);
