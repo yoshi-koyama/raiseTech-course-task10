@@ -6,6 +6,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +28,11 @@ public class SkiresortCreateFormTest {
 
     @Nested
     class NameTest {
-//        @BeforeEach
-//        void setUp() {
-//            // テストケース内でのローカライズを設定（日本語を指定）
-//            Locale.setDefault(Locale.JAPANESE);
-//        }
+        @BeforeEach
+        void setUp() {
+            // テストケース内でのローカライズを設定（日本語を指定）
+            Locale.setDefault(Locale.JAPANESE);
+        }
 
         @Test
         public void nameに1文字未満を登録した時バリデーションエラーとなること() {
@@ -47,8 +48,6 @@ public class SkiresortCreateFormTest {
                             tuple("name", "空白は許可されていません"),
                             tuple("name", "1文字以上20文字以下で入力してください")
                     );
-
-            Locale.setDefault(Locale.getDefault());
         }
 
         @Test
