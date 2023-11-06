@@ -6,6 +6,7 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -25,16 +26,16 @@ public class SkiresortCreateFormTest {
         validator = factory.getValidator();
     }
 
-    @BeforeAll
-    public static void setUpLocale() {
-        Locale.setDefault(new Locale("ja", "JP")); // ロケールを日本語に設定
-    }
-
     @Nested
     class NameTest {
+        @BeforeEach
+        void setUp() {
+            // テストケース内でのローカライズを設定（日本語を指定）
+            Locale.setDefault(Locale.JAPANESE);
+        }
+
         @Test
         public void nameに1文字未満を登録した時バリデーションエラーとなること() {
-            Locale.setDefault(Locale.JAPANESE);
 
             SkiresortCreateForm createForm = new SkiresortCreateForm("", "Canada", "The scenery was very beautiful");
             var violations = validator.validate(createForm);
