@@ -31,3 +31,31 @@
 ->postリクエストを送ると返ってくる（返ってくる＝失敗）
 ->正しい場合:例外は出ない
 ->ExceptionHandlerを通る場合またはControllerを通る場合に分かれる
+
+### Validator
+
+- SkiresortUpdateFormにバリデーション設定
+- @Size:1文字〜20文字 エラーメッセージも記述する
+- @BeforeAll:付与されたstaticメソッドは全テストが実行される前に実行されるメソッド
+
+- `import static org.assertj.core.api.Assertions.assertThat;`:手動で追加
+- `import jakarta.validation.ValidatorFactory;`:手動で追加
+- `ValidatorFactory 変数 = Validation.buildDefaultValidatorFactory();`:バリデーションを扱うValidatorクラスを生成するファクトリークラス
+- `Validator 変数 = [ValidatorFactory] .getValidator();`:ValidatorFactoryからgetValidatorメソッドでValidatorクラスのインスタンスを取得する->
+  Validatorがバリデーションに関する各種の機能を提供してくれる
+
+- `var`:Java10以降で変数宣言で型推論を利用する(変数定義の際自動的に型決定される)->動的型付けではないため一度varで定義した変数に別の方の値を再代入することはできない
+
+- `@Size`:"サイズは{min}から{max}の間でなければなりません"
+- `.extracting(violation -> violation.getPropertyPath().toString(), ConstraintViolation::getMessage)`
+    - `extracting `:AssertJライブラリの一部で、リストやコレクションから特定の要素を抽出して検証する
+    - `violations`:リストの各要素に対して、ConstraintViolationオブジェクト(nameやarea)を文字列に変換し、ConstraintViolationオブジェクト(
+      バリデーションエラーが発生した際に生成されるオブジェクト)からエラーメッセージを取得する
+    - `containsExactlyInAnyOrder`:期待されるプロパティパス(バリデーションエラーが発生した場所)、エラーメッセージと実際の結果が一致することを検証する
+
+- STRICT:日付と時刻を厳密に解決する
+- LENIENT:日付けと時刻を厳密ではない方法で解決する
+
+### エラー対策
+
+- 期待値と違うエラー: デバッグして`response`を確認する

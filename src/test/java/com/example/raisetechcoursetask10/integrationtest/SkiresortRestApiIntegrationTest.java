@@ -80,6 +80,7 @@ public class SkiresortRestApiIntegrationTest {
                     """, response, JSONCompareMode.STRICT);
         }
 
+
         @Test
         @DataSet(value = "datasets/it/skiresort.yml")
         @Transactional
@@ -115,101 +116,101 @@ public class SkiresortRestApiIntegrationTest {
                     }                  
                     """, response, JSONCompareMode.STRICT);
         }
+    }
 
-        @Nested
-        class UpdateTest {
-            @Test
-            @DataSet(value = "datasets/it/skiresort.yml")
-            @ExpectedDataSet(value = "datasets/it/update-skiresort.yml")
-            @Transactional
-            void 存在するIDを指定してスキーリゾート情報を更新するとステータスコード200を返すこと() throws Exception {
-                String response = mockMvc.perform(MockMvcRequestBuilders.patch("/skiresorts/{id}", 3)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("""
-                                        {
-                                              "id": 3,
-                                              "name": "Treble Cone",
-                                              "area": "NewZealand",
-                                              "customerEvaluation": "Features a long course with views of Lake Wanaka"
-                                        }                                      
-                                        """))
-                        .andExpect(MockMvcResultMatchers.status().isOk())
-                        .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+    @Nested
+    class UpdateTest {
+        @Test
+        @DataSet(value = "datasets/it/skiresort.yml")
+        @ExpectedDataSet(value = "datasets/it/update-skiresort.yml")
+        @Transactional
+        void 存在するIDを指定してスキーリゾート情報を更新するとステータスコード200を返すこと() throws Exception {
+            String response = mockMvc.perform(MockMvcRequestBuilders.patch("/skiresorts/{id}", 3)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                          "id": 3,
+                                          "name": "Treble Cone",
+                                          "area": "NewZealand",
+                                          "customerEvaluation": "Features a long course with views of Lake Wanaka"
+                                    }                                      
+                                    """))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-                JSONAssert.assertEquals("""
-                        {
-                            "message": "successfully update"
-                        }                   
-                        """, response, JSONCompareMode.STRICT);
-            }
-
-            @Test
-            @DataSet(value = "datasets/it/skiresort.yml")
-            @Transactional
-            void 存在しないIDのスキーリゾートを更新した時ステータスコード404を返すこと() throws Exception {
-                String response = mockMvc.perform(MockMvcRequestBuilders.patch("/skiresorts/{id}", 100)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("""
-                                        {
-                                            "id": 100,
-                                            "name": "Blue Mountain",
-                                            "area": "Canada",
-                                            "customerEvaluation": "All of the lodges and ski houses are cute, like a dreamland"
-                                        }                                                              
-                                        """))
-                        .andExpect(MockMvcResultMatchers.status().isNotFound())
-                        .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
-
-                JSONAssert.assertEquals("""
-                        {
-                            "path": "/skiresorts/100",
-                            "status": "404",
-                            "message": "resource not found",
-                            "timestamp": "2023-10-20T20:48.123456789+09:00[JST/Tokyo]",
-                            "error": "Not Found"
-                        }
-                        // timestampは比較対象外
-                        """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
-            }
+            JSONAssert.assertEquals("""
+                    {
+                        "message": "successfully update"
+                    }                   
+                    """, response, JSONCompareMode.STRICT);
         }
 
-        @Nested
-        class DeleteTest {
-            @Test
-            @DataSet(value = "datasets/it/skiresort.yml")
-            @ExpectedDataSet(value = "datasets/it/delete-skiresort.yml")
-            @Transactional
-            void 存在するIDを指定してスキーリゾートを削除したときステータスコード200を返すこと() throws Exception {
-                String response = mockMvc.perform(MockMvcRequestBuilders.delete("/skiresorts/{id}", 3))
-                        .andExpect(MockMvcResultMatchers.status().isOk())
-                        .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+        @Test
+        @DataSet(value = "datasets/it/skiresort.yml")
+        @Transactional
+        void 存在しないIDのスキーリゾートを更新した時ステータスコード404を返すこと() throws Exception {
+            String response = mockMvc.perform(MockMvcRequestBuilders.patch("/skiresorts/{id}", 100)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("""
+                                    {
+                                        "id": 100,
+                                        "name": "Blue Mountain",
+                                        "area": "Canada",
+                                        "customerEvaluation": "All of the lodges and ski houses are cute, like a dreamland"
+                                    }                                                              
+                                    """))
+                    .andExpect(MockMvcResultMatchers.status().isNotFound())
+                    .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-                JSONAssert.assertEquals("""
-                        {
-                            "message": "successfully deleted"
-                        }
-                        """, response, JSONCompareMode.STRICT);
-            }
+            JSONAssert.assertEquals("""
+                    {
+                        "path": "/skiresorts/100",
+                        "status": "404",
+                        "message": "resource not found",
+                        "timestamp": "2023-10-20T20:48.123456789+09:00[JST/Tokyo]",
+                        "error": "Not Found"
+                    }
+                    // timestampは比較対象外
+                    """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
+        }
+    }
 
-            @Test
-            @DataSet(value = "datasets/it/skiresort.yml")
-            @Transactional
-            void 存在しないIDのスキーリゾートを削除した時ステータスコードは404を返すこと() throws Exception {
-                String response = mockMvc.perform(MockMvcRequestBuilders.delete("/skiresorts/{id}", 5))
-                        .andExpect(status().isNotFound())
-                        .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+    @Nested
+    class DeleteTest {
+        @Test
+        @DataSet(value = "datasets/it/skiresort.yml")
+        @ExpectedDataSet(value = "datasets/it/delete-skiresort.yml")
+        @Transactional
+        void 存在するIDを指定してスキーリゾートを削除したときステータスコード200を返すこと() throws Exception {
+            String response = mockMvc.perform(MockMvcRequestBuilders.delete("/skiresorts/{id}", 3))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-                JSONAssert.assertEquals("""
-                        {
-                            "path": "/skiresorts/5",
-                            "status": "404",
-                            "message": "resource not found",
-                            "timestamp": "2023-10-26T07:00:00:123456789+09:00[JST/Tokyo]",
-                            "error": "Not Found"
-                        }
-                                                
-                        """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
-            }
+            JSONAssert.assertEquals("""
+                    {
+                        "message": "successfully deleted"
+                    }
+                    """, response, JSONCompareMode.STRICT);
+        }
+
+        @Test
+        @DataSet(value = "datasets/it/skiresort.yml")
+        @Transactional
+        void 存在しないIDのスキーリゾートを削除した時ステータスコードは404を返すこと() throws Exception {
+            String response = mockMvc.perform(MockMvcRequestBuilders.delete("/skiresorts/{id}", 5))
+                    .andExpect(status().isNotFound())
+                    .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+            JSONAssert.assertEquals("""
+                    {
+                        "path": "/skiresorts/5",
+                        "status": "404",
+                        "message": "resource not found",
+                        "timestamp": "2023-10-26T07:00:00:123456789+09:00[JST/Tokyo]",
+                        "error": "Not Found"
+                    }
+                    // timestampは比較対象外                        
+                    """, response, new CustomComparator(JSONCompareMode.STRICT, new Customization("timestamp", ((o1, o2) -> true))));
         }
     }
 }
