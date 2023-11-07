@@ -46,7 +46,7 @@ public class SkiresortCreateFormTest {
                     .extracting(violation -> violation.getPropertyPath().toString(), ConstraintViolation::getMessage)
                     .containsExactlyInAnyOrder(
                             tuple("name", "空白は許可されていません"),
-                            tuple("name", "1文字以上20文字以下で入力してください")
+                            tuple("name", "1 から 20 の間のサイズにしてください")
                     );
         }
 
@@ -72,7 +72,7 @@ public class SkiresortCreateFormTest {
             assertThat(violations).hasSize(1);
             assertThat(violations)
                     .extracting(violation -> violation.getPropertyPath().toString(), ConstraintViolation::getMessage)
-                    .containsExactlyInAnyOrder(tuple("name", "1文字以上20文字以下で入力してください"));
+                    .containsExactlyInAnyOrder(tuple("name", "1 から 20 の間のサイズにしてください"));
         }
     }
 }
